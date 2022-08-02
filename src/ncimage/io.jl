@@ -18,13 +18,13 @@ function open!(image::NCImage; mode="r", args...)
     # reload arrays
     image.data = imds["image"].var
     image.mjd = imds["mjd"].var
-    image.freq = imds["mjd"].var
+    image.freq = imds["freq"].var
     image.metadata = imds.attrib
 end
 
 function close!(image::NCImage)
     if isopen(image)
-        close(image.dataset)
+        Base.close(image.dataset)
     end
 end
 

@@ -8,6 +8,7 @@ function imshow(
     fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=Jy,
     saunit::Union{String,Unitful.Units,Unitful.Quantity}="pixel",
     idx=[1, 1, 1],
+    cmap="afmhot",
     scale::String="linear",
     gamma::Number=0.5,
     dyrange::Number=1000,
@@ -16,7 +17,8 @@ function imshow(
     relative=false,
     axisoff=false,
     axislabel=true,
-    add_colorbar=false)
+    add_colorbar=false,
+    imshowargs...)
 
     # get angular unit
     dopixel::Bool = false
@@ -85,10 +87,12 @@ function imshow(
         error("scale must be log, gamma or linear")
     end
 
-    imsobj = PyPlot.imshow(imarr,
+    imsobj = PyPlot.imshow(
+        imarr,
         origin="lower", extent=imextent,
         vmin=nmin, vmax=nmax, norm=norm,
-        cmap="afmhot", interpolation="bilinear")
+        cmap=cmap, interpolation="bilinear",
+        imshowargs...)
 
     outdict = Dict()
     outdict["imshowobj"] = imsobj
