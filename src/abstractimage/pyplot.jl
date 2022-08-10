@@ -1,4 +1,5 @@
 export imshow
+export get_imextent
 export plot_colorbar
 export plot_xylabel
 

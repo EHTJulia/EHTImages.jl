@@ -1,7 +1,7 @@
 export NCDImage
 export isopen
 
-@with_kw mutable struct NCImage <: AbstractEHTImage
+@with_kw mutable struct NCImage{T,N} <: AbstractEHTImage{T,N}
     filename = nothing
     dataset = nothing
     group = nothing
@@ -10,6 +10,9 @@ export isopen
     freq = nothing
     metadata = nothing
 end
+
+# NCImage is a disk-based image data
+isdiskimage(image::NCImage) = IsDiskImage()
 
 function isopen(image::NCImage)::Bool
     if isnothing(image.dataset)
