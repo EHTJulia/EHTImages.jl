@@ -9,7 +9,7 @@ using Formatting # for python-ish string formatter
 using NCDatasets # to hande netcdf files
 using Missings: disallowmissing # to load netcdf data
 using DocStringExtensions # for docstrings
-using Parameters
+using Parameters # for more flexible definitions of struct
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad
 
 # Include 
