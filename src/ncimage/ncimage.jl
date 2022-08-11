@@ -1,4 +1,4 @@
-export NCDImage
+export NCImage
 export isopen
 
 #@with_kw mutable struct NCImage{T,N} <: AbstractEHTImage{T,N}
