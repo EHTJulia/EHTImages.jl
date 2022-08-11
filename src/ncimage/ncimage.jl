@@ -17,9 +17,8 @@ end
 # NCImage is a disk-based image data
 isdiskimage(image::NCImage) = IsDiskImage()
 
-@inline function Base.getindex(image::NCImage, I...)
-
-end
+#@inline function Base.getindex(image::NCImage, I...)
+#end
 
 function isopen(image::NCImage)::Bool
     if isnothing(image.dataset)
