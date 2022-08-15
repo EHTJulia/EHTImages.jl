@@ -1,5 +1,6 @@
 export AbstractEHTImage
-export ISDiskImage, NotDiskImage, isdiskimage
+export IsDiskData, NotDiskData, isdiskdata
+export isopen, iswritable
 export get_xygrid, get_uvgrid
 export get_bconv
 
@@ -43,33 +44,64 @@ Base.IndexStyle(image::AbstractEHTImage) = Base.IndexCartesian()
 # rather than slided array of AbstractEHTImage.data
 Base.getindex(image::AbstractEHTImage, args...) = Base.getindex(image.data, args...)
 
+"""
+    DataStorageType
 
+Internal type for specifying the nature of the location of data.
 """
-"""
-struct IsDiskImage end
-
-
-"""
-"""
-struct NotDiskImage end
+abstract type DataStorageType end
 
 
 """
+    $(TYPEDEF)
+
+Defines a trait that a states that data is disk based.
 """
-function isdiskimage end
+struct IsDiskData <: DataStorageType end
 
 
 """
-"""
-isdiskimage(image::AbstractEHTImage) = IsDiskImage()
+    $(TYPEDEF)
 
+Defines a trait that a states that data is memory based.
+"""
+struct NotDiskData <: DataStorageType end
+
+"""
+    isdiskdata(data)
+
+Determines whether the data is disk-based or memory-based.
+Return IsDiskData() if data is disk-based,
+while return NotDiskData() if data is memory-based.
+"""
+@inline isdiskdata(image::AbstractEHTImage) = IsDiskData()
+
+"""
+    isopen(image::Abstract)
+
+Check if data is accessible, return true for accessible data
+and false if data is not accessible. This is relevant if
+image is based on disk data.
+"""
+Base.isopen(image::AbstractEHTImage) = false
+
+"""
+    isopen(image::Abstract)
+
+Check if data is accessible, return true for accessible data
+and false if data is not accessible. This is relevant if
+image is based on disk data.
+"""
+Base.iswritable(image::AbstractEHTImage) = false
 
 """
     get_xygrid
 
 Returning 1-dimensional StepRange objects for the grids along with x and y axis in the given angular unit specified by angunit.
 """
-function get_xygrid(image::AbstractEHTImage, angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
+function get_xygrid(
+    image::AbstractEHTImage,
+    angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
     # Get scaling for the flux unit
     if angunit isa String
         aunit = get_unit(angunit)
@@ -157,13 +189,13 @@ end
 
 
 """
-    get_uvgrid
+    get_uvgrid(image, dofftshift=true)
 
 returning u and v grids corresponding to the image field of view and pixel size.
 """
 function get_uvgrid(image::AbstractEHTImage, dofftshift::Bool=true)
     # nx, ny
-    nx, ny = size(image.da)[1:3]
+    nx, ny, _ = size(image)
 
     # dx, dy
     dxrad = image.metadata["dx"]

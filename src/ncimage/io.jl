@@ -1,8 +1,16 @@
 export load_image, save_netcdf
 export open!
-export close!, close
+export close!
 
-function open!(image::NCImage; mode="r", args...)
+function open!(
+    image::NCImage;
+    mode::AbstractString="r",
+    args...)
+    # check if the mode is okay
+    if mode != "r" && mode != "a" && mode != "c"
+        @error "mode must be \"r\" (read-only), \"a\" (append; edit mode) or \"c\" (create a new file)"
+    end
+
     # check if the file is already opened
     if isopen(image)
         close!(image)
@@ -31,7 +39,7 @@ function close!(image::NCImage)
 end
 
 
-function close(image::NCImage)
+function Base.close(image::NCImage)
     close!(image)
 end
 
@@ -42,6 +50,11 @@ function load_image(
     group::AbstractString="image",
     args...
 )::NCImage
+    # check if the mode is okay
+    if mode != "r" && mode != "a"
+        @error "mode must be \"r\" (read-only) or \"a\" (append; edit mode)"
+    end
+
     # genrate image object
     image = NCImage(
         filename=filename,
@@ -61,9 +74,14 @@ function save_netcdf(
     group::AbstractString="image",
     args...
 )
+    # check if the mode is okay
+    if mode != "a" && mode != "c"
+        @error "mode must be \"a\" (append; edit the existing file) or \"c\" (create a new file)"
+    end
+
     # check if the file is already opened
-    if isopen(image)
-        open!(image::NCImage; mode="r")
+    if isopen(image) == false
+        @error "Data is not accessible. please open file with open!"
     end
 
     # create the output NetCDF file

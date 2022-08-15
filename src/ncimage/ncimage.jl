@@ -1,5 +1,4 @@
 export NCImage
-export isopen
 
 #@with_kw mutable struct NCImage{T,N} <: AbstractEHTImage{T,N}
 @with_kw mutable struct NCImage <: AbstractEHTImage
@@ -15,12 +14,12 @@ end
 #NCImage(Args...) = NCImage{Float64,5}(Args...)
 
 # NCImage is a disk-based image data
-isdiskimage(image::NCImage) = IsDiskImage()
+isdiskdata(image::NCImage) = IsDiskData()
 
 #@inline function Base.getindex(image::NCImage, I...)
 #end
 
-function isopen(image::NCImage)::Bool
+function Base.isopen(image::NCImage)::Bool
     if isnothing(image.dataset)
         return false
     end
@@ -29,5 +28,13 @@ function isopen(image::NCImage)::Bool
         return false
     else
         return true
+    end
+end
+
+function Base.iswritable(image::NCImage)::Bool
+    if isopen(image)
+        return image.dataset.iswritable
+    else
+        return false
     end
 end
