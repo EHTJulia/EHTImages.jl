@@ -2,7 +2,8 @@ export convolve!, convolve_gauss!
 
 function convolve!(
     image::AbstractEHTImage,
-    model::AbstractModel
+    model::AbstractModel,
+    ex=SequentialEx()
 )
     if iswritable(image) == false
         @error "Input image is not writable. Please re-open file on a writable mode."
@@ -16,7 +17,7 @@ function convolve!(
 
     # mapout kernel
     vkernel = Matrix{ComplexF64}(undef, length(ug), length(vg))
-    @inbounds Threads.@threads for (uidx, vidx) in collect(Iterators.product(1:nx, 1:ny))
+    @floop ex for (uidx, vidx) in collect(Iterators.product(1:nx, 1:ny))
         vkernel[uidx, vidx] = conj(visibility_point(model, ug[uidx], vg[vidx]))
     end
 
@@ -24,7 +25,8 @@ function convolve!(
     fp = plan_fft(image.data[:, :, 1, 1, 1])
     ifp = plan_ifft(complex(image.data[:, :, 1, 1, 1]))
 
-    @inbounds Threads.@threads for (sidx, fidx, tidx) in collect(Iterators.product(1:np, 1:nf, 1:nt))
+    # exectute fft-based convlution with the kernel
+    @floop ex for (sidx, fidx, tidx) in collect(Iterators.product(1:np, 1:nf, 1:nt))
         imarr = image.data[:, :, sidx, fidx, tidx]
         vim = fp * imarr
         vim .*= vkernel
@@ -55,7 +57,8 @@ function convolve_gauss!(
     θmin::Real=-1,
     ϕ::Real=0;
     θunit=rad,
-    ϕunit=deg
+    ϕunit=deg,
+    ex=SequentialEx()
 )
     if iswritable(image) == false
         @error "Input image is not writable. Please re-open file on a writable mode."
@@ -94,7 +97,7 @@ function convolve_gauss!(
     model = stretched(model, θmaj_rad, θmin_rad)
     model = rotated(model, ϕ_rad)
 
-    convolve!(image, model)
+    convolve!(image, model, ex)
 end
 
 #function convolve_geomodel(image::Image, geomodel::GeometricModel)

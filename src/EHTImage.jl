@@ -5,8 +5,9 @@ using Base
 using DocStringExtensions # for docstrings
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm
 using EHTModel
-using Formatting # for python-ish string formatter
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
+using FLoops
+using Formatting # for python-ish string formatter
 using Logging
 using Missings: disallowmissing # to load netcdf data
 using NCDatasets # to hande netcdf files
