@@ -2,13 +2,13 @@ export NCImage
 
 #@with_kw mutable struct NCImage{T,N} <: AbstractEHTImage{T,N}
 @with_kw mutable struct NCImage <: AbstractEHTImage
+    filename = nothing
+    group = nothing
     data = nothing
     mjd = nothing
     freq = nothing
     pol = nothing
     metadata = nothing
-    filename = nothing
-    group = nothing
     dataset = nothing
 end
 #NCImage(Args...) = NCImage{Float64,5}(Args...)
@@ -19,6 +19,7 @@ isdiskdata(image::NCImage) = IsDiskData()
 #@inline function Base.getindex(image::NCImage, I...)
 #end
 
+# This is a function to check if the image is opened.
 function Base.isopen(image::NCImage)::Bool
     if isnothing(image.dataset)
         return false

@@ -1,15 +1,47 @@
-export load_image, save_netcdf
+export load_image
+export save_netcdf, save_netcdf!
 export open!
 export close!
 
-function open!(
-    image::NCImage;
-    mode::AbstractString="r",
-    args...)
-    # check if the mode is okay
-    if mode != "r" && mode != "a" && mode != "c"
-        @error "mode must be \"r\" (read-only), \"a\" (append; edit mode) or \"c\" (create a new file)"
+"""
+    ncdmodes
+
+A dictrionary relating Symbols to actual strings for the access mode to netCDF files
+using NCDatasets.jl. Keys are:
+
+- `:read`: 
+    open an existing netCDF file or OPeNDAP URL in read-only mode (`"r"` in NCDatasets.jl).
+- `:create`:
+    create a new NetCDF file (an existing file with the same name will be overwritten;
+    `"c"` in NCDatasets.jl)
+- `:append`:
+    open filename into append mode (i.e. existing data in the netCDF file is 
+    not overwritten; `"a"` in NCDatasets.jl)
+"""
+const ncdmodes = Dict(
+    :read => "r",
+    :create => "c",
+    :append => "a"
+)
+
+"""
+    get_ncdmodestr(mode::Symbol) => String
+"""
+function get_ncdmodestr(mode::Symbol)::String
+    if mode in keys(ncdmodes)
+        return ncdmodes[mode]
+    else
+        @error "The input mode `$(mode)` is not available. See help for `EHTImage.ncdmodes`"
     end
+end
+
+"""
+    open!(image, mode)
+"""
+function open!(image::NCImage, mode::Symbol=:read)
+
+    # get mode string
+    modestr = get_ncdmodestr(mode)
 
     # check if the file is already opened
     if isopen(image)
@@ -17,7 +49,7 @@ function open!(
     end
 
     # open NetCDF file
-    image.dataset = NCDataset(image.filename, mode, args...)
+    image.dataset = NCDataset(image.filename, modestr)
 
     # open subdataset
     groups = get_groups(image.group)
@@ -31,7 +63,9 @@ function open!(
     image.metadata = imds.attrib
 end
 
-
+"""
+    close!(image::NCImage)
+"""
 function close!(image::NCImage)
     if isopen(image)
         Base.close(image.dataset)
@@ -39,53 +73,56 @@ function close!(image::NCImage)
 end
 
 
+"""
+    close(image::NCImage)
+"""
 function Base.close(image::NCImage)
     close!(image)
 end
 
 
+"""
+    load_image(filename; [group="image", mode=:read])
+"""
 function load_image(
     filename::AbstractString;
-    mode::AbstractString="r",
     group::AbstractString="image",
-    args...
+    mode::Symbol=:read
 )::NCImage
-    # check if the mode is okay
-    if mode != "r" && mode != "a"
-        @error "mode must be \"r\" (read-only) or \"a\" (append; edit mode)"
-    end
-
-    # genrate image object
+    # generate image object
     image = NCImage(
         filename=filename,
         group=group,
     )
 
     # load image
-    open!(image, mode=mode, args...)
+    open!(image, mode)
     return image
 end
 
-
-function save_netcdf(
+"""
+    save_netcdf!(image, filename; [mode=:create, group="image"])
+"""
+function save_netcdf!(
     image::NCImage,
     filename::AbstractString;
-    mode::AbstractString="c",
-    group::AbstractString="image",
-    args...
+    mode::Symbol=:create,
+    group::AbstractString="image"
 )
-    # check if the mode is okay
-    if mode != "a" && mode != "c"
-        @error "mode must be \"a\" (append; edit the existing file) or \"c\" (create a new file)"
+    # get mode string
+    if mode ∉ [:create, :append]
+        @error "mode must be :create or :append"
+    else
+        modestr = get_ncdmodestr(mode)
     end
 
     # check if the file is already opened
     if isopen(image) == false
-        @error "Data is not accessible. please open file with open!"
+        open!(image, :read)
     end
 
     # create the output NetCDF file
-    outdataset = NCDataset(filename, mode, args...)
+    outdataset = NCDataset(filename, modestr)
 
     # generate dataset
     groups = get_groups(group)
@@ -126,6 +163,19 @@ function save_netcdf(
     vt[:] = image.mjd[:]
 
     NCDatasets.close(outdataset)
+end
+
+"""
+    save_netcdf(image, filename; [mode=:create, group="image"]) => NCImage
+"""
+function save_netcdf(
+    image::NCImage,
+    filename::AbstractString;
+    mode::Symbol=:create,
+    group::AbstractString="image"
+)
+    save_netcdf!(image, filename, mode=mode, group=group)
+    return load_image(filename, group=group, mode=:read)
 end
 
 

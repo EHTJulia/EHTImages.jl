@@ -5,7 +5,7 @@ export plot_xylabel
 
 function imshow(
     image::AbstractEHTImage;
-    angunit::Union{Nothing,String,Unitful.Units,Unitful.Quantity}=nothing,
+    angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
     fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=Jy,
     saunit::Union{String,Unitful.Units,Unitful.Quantity}="pixel",
     idx=[1, 1, 1],

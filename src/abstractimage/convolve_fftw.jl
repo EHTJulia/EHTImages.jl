@@ -1,4 +1,4 @@
-export convolve, convolve_gauss
+export convolve!, convolve_gauss!
 
 function convolve!(
     image::AbstractEHTImage,
@@ -32,35 +32,67 @@ function convolve!(
     end
 end
 
+
+"""
+    convolve_gauss!(image, θmaj, [θmin, ϕ]; [θunit, ϕunit])
+
+- `image::AbstractEHTImage`:
+    The input image.
+- `θmaj::Real`:
+    The major-axis FWHM size of the Gaussian.
+- `θmin::Real`:
+    The minor-axis FWHM size of the Gaussian. If `θmin < 0`, then
+    `θmin = θmax` (i.e. circular Gaussian). Default to -1.
+- `ϕ::Real`:
+    The position angle of the Gausian. Default to 0.
+- `θunit, ϕunit::Unitful`:
+    The unit for `θmaj` & `θmin` and `ϕ`, respectively. 
+    Default: `θunit=rad` and `ϕ=deg`.
+"""
 function convolve_gauss!(
     image::AbstractEHTImage,
-    majfwhm::Number;
-    minfwhm::Number=-1,
-    angle::Number=0,
-    angunit=μas,
-    angscale::Number=1
+    θmaj::Real,
+    θmin::Real=-1,
+    ϕ::Real=0;
+    θunit=rad,
+    ϕunit=deg
 )
-    if majsize <= 0
-        @error "majsize must be positive"
+    if iswritable(image) == false
+        @error "Input image is not writable. Please re-open file on a writable mode."
     end
 
-    if minsize > majsize
-        @error "majsize must be larger than minsize"
+    if θmaj <= 0
+        @error "θmaj must be positive"
     end
 
-    # conversion factor
-    aconv = unitconv(rad, angunit) * angscale
-    majsize = majfwhm * aconv
-    if minfwhm < 0
-        minsize = majsize
+    if θmin > θmaj
+        @error "θmin must be larger than θmaj"
+    end
+
+    # Conversion factor for the angular scales
+    fθ_rad = unitconv(θunit, rad) * σ2fwhm
+
+    # scale major axis and minor axis sizes
+    θmaj_rad = θmaj * fθ_rad
+    if θmin < 0
+        θmin_rad = θmaj_rad
     else
-        minsize = minfwhm * aconv
+        θmin_rad = θmin * fθ_rad
+    end
+
+    # Unit conversion for the position angle
+    if ϕunit == rad
+        ϕ_rad = ϕ
+    elseif ϕunit == deg
+        ϕ_rad = deg2rad(ϕ)
+    else
+        ϕ_rad = ϕ * unitconv(ϕunit, rad)
     end
 
     # generate geometric model to convolve
     model = Gaussian()
-    model = stretched(model, majsize, minsize)
-    model = rotated(model, deg2rad * angle)
+    model = stretched(model, θmaj_rad, θmin_rad)
+    model = rotated(model, ϕ_rad)
 
     convolve!(image, model)
 end

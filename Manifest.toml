@@ -29,15 +29,15 @@ uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 
 [[ArrayInterface]]
 deps = ["ArrayInterfaceCore", "Compat", "IfElse", "LinearAlgebra", "Static"]
-git-tree-sha1 = "621913bff3923ff489e4268ba2b425bfacbb1759"
+git-tree-sha1 = "0582b5976fc76523f77056e888e454f0f7732596"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "6.0.21"
+version = "6.0.22"
 
 [[ArrayInterfaceCore]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "12bebdb8491042f36c8700705f11c28fef284515"
+git-tree-sha1 = "40debc9f72d0511e12d817c7ca06a721b6423ba3"
 uuid = "30b0a656-2188-435a-8636-2ec0e6a096e2"
-version = "0.1.16"
+version = "0.1.17"
 
 [[ArrayInterfaceOffsetArrays]]
 deps = ["ArrayInterface", "OffsetArrays", "Static"]
@@ -161,10 +161,10 @@ uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.10.0"
 
 [[DataStructures]]
-deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
-git-tree-sha1 = "d1fff3a548102f48987a52a2e0d114fa97d730f0"
+deps = ["InteractiveUtils", "OrderedCollections"]
+git-tree-sha1 = "88d48e133e6d3dd68183309877eac74393daa7eb"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.18.13"
+version = "0.17.20"
 
 [[DataValueInterfaces]]
 git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
@@ -175,11 +175,15 @@ version = "1.0.0"
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
+[[DelimitedFiles]]
+deps = ["Mmap"]
+uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+
 [[DimensionalData]]
-deps = ["Adapt", "ArrayInterface", "ConstructionBase", "Dates", "Extents", "IntervalSets", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "Tables"]
-git-tree-sha1 = "ee34aa915d13091b0357e4746fe825aac616a30a"
+deps = ["Adapt", "ArrayInterfaceCore", "ConstructionBase", "Dates", "Extents", "IntervalSets", "IteratorInterfaceExtensions", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "TableTraits", "Tables"]
+git-tree-sha1 = "0ebf6bc7fcee3527640d9169e8c40121a119f725"
 uuid = "0703355e-b756-11e9-17c0-8b28908087d0"
-version = "0.20.11"
+version = "0.21.2"
 
 [[Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -196,8 +200,8 @@ deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [[EHTModel]]
-deps = ["Accessors", "DocStringExtensions", "NFFT"]
-git-tree-sha1 = "216ac282e415f60058016e56d176abd82fab373f"
+deps = ["Accessors", "DelimitedFiles", "DocStringExtensions", "NFFT"]
+git-tree-sha1 = "a722a71a0ca5cd354b5b8bc6c1786ca0a5781662"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModel.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
@@ -205,7 +209,7 @@ version = "0.1.0"
 
 [[EHTUtils]]
 deps = ["PhysicalConstants", "Unitful", "UnitfulAngles", "UnitfulAstro"]
-git-tree-sha1 = "18818572323f31063dc58e56531fe2f744b44af6"
+git-tree-sha1 = "6d414537b82fccf4a12411bfc558c5fa811b9899"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTUtils.jl"
 uuid = "9d0fa6a6-ae25-4c2e-8152-6c4b7f2016aa"
@@ -577,9 +581,9 @@ version = "0.7.6"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "StaticArraysCore", "Statistics"]
-git-tree-sha1 = "2d4e51cfad63d2d34acde558027acbc66700349b"
+git-tree-sha1 = "8803c6dea034ab8cd988abe4a91e5589d61c7416"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.5.3"
+version = "1.5.4"
 
 [[StaticArraysCore]]
 git-tree-sha1 = "5b413a57dd3cea38497d745ce088ac8592fbb5be"
