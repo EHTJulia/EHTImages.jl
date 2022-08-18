@@ -85,7 +85,7 @@ function imshow(
         end
         norm = nothing
     else
-        error("scale must be log, gamma or linear")
+        @throwerror ArgumentError "scale must be log, gamma or linear"
     end
 
     imsobj = PyPlot.imshow(

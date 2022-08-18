@@ -16,8 +16,9 @@ function convolve!(
     ex=SequentialEx()
 )
     if iswritable(image) == false
-        @error "Input image is not writable. Please re-open file on a writable mode."
+        @throwerror ArgumentError "Input image is not writable."
     end
+
     convolve_base!(image, model, ex=ex)
 end
 

@@ -31,7 +31,7 @@ function get_ncdmodestr(mode::Symbol)::String
     if mode in keys(ncdmodes)
         return ncdmodes[mode]
     else
-        @error "The input mode `$(mode)` is not available. See help for `EHTImage.ncdmodes`"
+        @throwerror ArgumentError "The input mode `$(mode)` is not available. See help for `EHTImage.ncdmodes`"
     end
 end
 
@@ -111,7 +111,7 @@ function save_netcdf!(
 )
     # get mode string
     if mode ∉ [:create, :append]
-        @error "mode must be :create or :append"
+        @throwerror ArgumentError "mode must be :create or :append"
     else
         modestr = get_ncdmodestr(mode)
     end

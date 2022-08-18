@@ -181,7 +181,7 @@ function get_bconv(
     elseif saunit isa Union{Unitful.Quantity,Unitful.Units}
         saconv = unitconv(rad^2, saunit)
     else
-        error("saunit must be 'pixel', 'beam', or units for solid angles")
+        @throwerror ArgumentError "saunit must be 'pixel', 'beam', or units for solid angles"
     end
 
     return fluxconv / saconv
