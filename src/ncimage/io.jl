@@ -31,7 +31,9 @@ function get_ncdmodestr(mode::Symbol)::String
     if mode in keys(ncdmodes)
         return ncdmodes[mode]
     else
-        @throwerror ArgumentError "The input mode `$(mode)` is not available. See help for `EHTImage.ncdmodes`"
+        msg = "The input mode `$(mode)` is not available. See help for `EHTImage.ncdmodes`"
+        @error msg
+        throw(ArgumentError(msg))
     end
 end
 
