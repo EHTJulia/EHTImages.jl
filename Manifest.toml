@@ -181,12 +181,12 @@ uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.1"
 
 [[Downloads]]
-deps = ["ArgTools", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [[EHTModel]]
 deps = ["Accessors", "DelimitedFiles", "DocStringExtensions", "NFFT"]
-git-tree-sha1 = "a722a71a0ca5cd354b5b8bc6c1786ca0a5781662"
+git-tree-sha1 = "3b0549cf9efd518b5536a892927605b873aba63b"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModel.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
@@ -228,6 +228,9 @@ deps = ["ContextVariablesX"]
 git-tree-sha1 = "656f7a6859be8673bf1f35da5670246b923964f7"
 uuid = "b9860ae5-e623-471e-878b-f6a53c775ea6"
 version = "0.1.1"
+
+[[FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
 [[FixedPointNumbers]]
 deps = ["Statistics"]
