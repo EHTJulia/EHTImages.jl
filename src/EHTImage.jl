@@ -23,6 +23,7 @@ include("abstractimage/pyplot.jl")
 
 #   NCImage
 include("ncimage/ncimage.jl")
+include("ncimage/convolve_fftw.jl")
 include("ncimage/io.jl")
 
 #   DimImage
