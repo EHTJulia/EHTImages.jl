@@ -27,6 +27,7 @@ DocStringExtensions = "0.9"
 FFTW = "1"
 Formatting = "0.4"
 Missings = "1"
+NCDatasets = "0.12"
 PyPlot = "2"
 julia = "1.7.3"
 
