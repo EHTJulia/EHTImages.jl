@@ -102,26 +102,8 @@ Returning 1-dimensional StepRange objects for the grids along with x and y axis 
 function get_xygrid(
     image::AbstractEHTImage,
     angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
-    # Get scaling for the flux unit
-    if angunit isa String
-        aunit = get_unit(angunit)
-    else
-        aunit = angunit
-    end
-
-    aunitconv = unitconv(rad, aunit)
-    dx = image.metadata["dx"]
-    dy = image.metadata["dy"]
-    ixref = image.metadata["ixref"]
-    iyref = image.metadata["iyref"]
-    nx, ny, _ = size(image)
-
-    xg = -dx * ((1-ixref):1:(nx-ixref))
-    yg = dy * ((1-iyref):1:(ny-iyref))
-
-    return (xg, yg)
+    return get_xygrid(image.metadata, angunit)
 end
-
 
 """
     get_bconv
@@ -194,20 +176,5 @@ end
 returning u and v grids corresponding to the image field of view and pixel size.
 """
 function get_uvgrid(image::AbstractEHTImage, dofftshift::Bool=true)
-    # nx, ny
-    nx, ny, _ = size(image)
-
-    # dx, dy
-    dxrad = image.metadata["dx"]
-    dyrad = image.metadata["dy"]
-
-    ug = fftfreq(nx, -1 / dxrad)
-    vg = fftfreq(ny, 1 / dyrad)
-
-    if dofftshift
-        ug = fftshift(ug)
-        vg = fftshift(vg)
-    end
-
-    return (ug, vg)
+    return get_uvgrid(image.metadata, dofftshift)
 end

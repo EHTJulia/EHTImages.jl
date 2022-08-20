@@ -195,6 +195,14 @@ repo-url = "https://github.com/EHTJulia/EHTModel.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
 version = "0.1.0"
 
+[[deps.EHTNCDBase]]
+deps = ["NCDatasets"]
+git-tree-sha1 = "e1eab1a17fc261ef6c9519fee522c09b3bccf259"
+repo-rev = "main"
+repo-url = "https://github.com/EHTJulia/EHTNCDBase.jl"
+uuid = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
+version = "0.1.0"
+
 [[deps.EHTUtils]]
 deps = ["Logging", "PhysicalConstants", "Unitful", "UnitfulAngles", "UnitfulAstro"]
 git-tree-sha1 = "0251f03990090ff4bc24b6697a0e2be62f4a3986"

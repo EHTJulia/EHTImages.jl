@@ -5,12 +5,14 @@ using Base
 using DocStringExtensions # for docstrings
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror
 using EHTModel
+using EHTNCDBase
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
 using FLoops
 using Formatting # for python-ish string formatter
 using Logging
 using Missings: disallowmissing # to load netcdf data
 using NCDatasets # to hande netcdf files
+using OrderedCollections # to use OrderedDictionary
 using Parameters # for more flexible definitions of struct
 using PyPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
@@ -19,12 +21,15 @@ using Unitful, UnitfulAngles, UnitfulAstro # for Units
 #   AbstractImage
 include("abstractimage/abstractimage.jl")
 include("abstractimage/convolve_fftw.jl")
+include("abstractimage/metadata.jl")
 include("abstractimage/pyplot.jl")
 
 #   NCImage
 include("ncimage/ncimage.jl")
 include("ncimage/convolve_fftw.jl")
-include("ncimage/io.jl")
+include("ncimage/io/const.jl")
+include("ncimage/io/reader.jl")
+include("ncimage/io/writer.jl")
 
 #   DimImage
 #include("dimimage/dimimage.jl")
