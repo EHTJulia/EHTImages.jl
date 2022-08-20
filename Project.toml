@@ -24,6 +24,7 @@ UnitfulAstro = "6112ee07-acf9-5e0f-b108-d242c714bf9f"
 
 [compat]
 <<<<<<< HEAD
+<<<<<<< HEAD
 DimensionalData = "0.21"
 DocStringExtensions = "0.9"
 FFTW = "1"
@@ -34,6 +35,9 @@ PyPlot = "2"
 =======
 UnitfulAstro = "1"
 >>>>>>> f9fd4567c980ca72b3af2bac685643bdf2fb541b
+=======
+Unitful = "1"
+>>>>>>> 3472c2c2c77285b0bbe504306a28678eac7a54a4
 julia = "1.7.3"
 
 [extras]
