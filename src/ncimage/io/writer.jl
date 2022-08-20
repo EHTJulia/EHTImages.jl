@@ -99,35 +99,25 @@ function create_ncimage(
         aconv = unitconv(angunit, rad)
     end
 
-    # type conversion
-    tconv = ncd_image_metadata_typeconv
-    tkeys = keys(ncd_image_metadata_typeconv)
-
     # set metadata
     #   initialize metadata
     attrib = default_metadata(NCImage())
     #   input metadata in arguments
     for key in keys(metadata)
-        if key in tkeys
-            attrib[key] = tconv[key](metadata[key])
-        else
-            attrib[key] = metadata[key]
-        end
+        attrib[key] = metadata[key]
     end
     #   input other information from arguments
-    attrib[:nx] = tconv[:nx](nx)
-    attrib[:dx] = tconv[:dx](dx * aconv)
-    attrib[:ixref] = tconv[:ixref](ixref)
-    attrib[:ny] = tconv[:ny](ny)
-    attrib[:dy] = tconv[:dy](dy * aconv)
-    attrib[:iyref] = tconv[:iyref](iyref)
-    attrib[:np] = tconv[:np](np)
-    attrib[:nf] = tconv[:nf](nf)
-    attrib[:nt] = tconv[:nf](nt)
+    attrib[:nx] = nx
+    attrib[:dx] = dx * aconv
+    attrib[:ixref] = ixref
+    attrib[:ny] = ny
+    attrib[:dy] = dy * aconv
+    attrib[:iyref] = iyref
+    attrib[:np] = np
+    attrib[:nf] = nf
+    attrib[:nt] = nt
     #   set metadata
-    for key in keys(attrib)
-        imds.attrib[key] = attrib[key]
-    end
+    set_ncd_image_metadata!(imds, attrib)
 
     # define dimensions and variables
     define_ncd_image_dimensions!(imds, nx, ny, np, nf, nt)
@@ -205,10 +195,15 @@ function save_netcdf!(
     define_ncd_image_dimensions!(outsubds, nx, ny, np, nf, nt)
     define_ncd_image_variables!(outsubds)
 
-    # set attributes
+    # set metadata
+    #   initialize metadata
+    attrib = default_metadata(NCImage())
+    #   fill metadata 
     for key in keys(image.metadata)
-        outsubds.attrib[key] = image.metadata[key]
+        attrib[key] = image.metadata[key]
     end
+    #   write metadata
+    set_ncd_image_metadata!(outsubds, attrib)
 
     # set variables
     #   image
@@ -284,6 +279,28 @@ function define_ncd_image_variables!(ncd)
     for key in keys(ncd_image_varnames)
         @debug key, ncd_image_varnames[key], ncd_image_vartypes[key], ncd_image_vardims[key]
         defVar(ncd, ncd_image_varnames[key], ncd_image_vartypes[key], ncd_image_vardims[key])
+    end
+
+    return nothing
+end
+
+"""
+    set_ncd_image_metadata!(ncd)
+
+Set NetCDF4 metadata based on EHT NetCDF4 Image Format.
+"""
+function set_ncd_image_metadata!(ncd, metadata)
+    # shortcut to the format
+    tconv = ncd_image_metadata_typeconv
+    tkeys = keys(ncd_image_metadata_typeconv)
+
+    # update metadata
+    for key in keys(metadata)
+        if key in tkeys
+            ncd.attrib[key] = tconv[key](metadata[key])
+        else
+            ncd.attrib[key] = metadata[key]
+        end
     end
 
     return nothing
