@@ -1,6 +1,6 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.7.3"
 manifest_format = "2.0"
 
 [[deps.ANSIColoredPrinters]]
@@ -195,12 +195,12 @@ uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 version = "0.27.22"
 
 [[deps.Downloads]]
-deps = ["ArgTools", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [[deps.EHTImage]]
-deps = ["DimensionalData", "DocStringExtensions", "EHTModel", "EHTUtils", "FFTW", "FLoops", "Formatting", "Logging", "Missings", "NCDatasets", "Parameters", "PyPlot", "Unitful", "UnitfulAngles", "UnitfulAstro"]
-git-tree-sha1 = "5e755f9c454de329e8fa117c9b97b5fcbdbc00d8"
+deps = ["DimensionalData", "DocStringExtensions", "EHTModel", "EHTNCDBase", "EHTUtils", "FFTW", "FLoops", "Formatting", "Logging", "Missings", "NCDatasets", "OrderedCollections", "Parameters", "PyPlot", "Unitful", "UnitfulAngles", "UnitfulAstro"]
+git-tree-sha1 = "996c5fd97c642e04614f1a6836b17835bbba5b29"
 repo-rev = "main"
 repo-url = ".."
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
@@ -208,15 +208,23 @@ version = "0.1.0"
 
 [[deps.EHTModel]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "d8ddfbd75aac34e7e8c542366bb070637e4f23fa"
+git-tree-sha1 = "626b76236b702c651480800b002211629be87fa6"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModel.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
 version = "0.1.0"
 
+[[deps.EHTNCDBase]]
+deps = ["NCDatasets"]
+git-tree-sha1 = "e1eab1a17fc261ef6c9519fee522c09b3bccf259"
+repo-rev = "main"
+repo-url = "https://github.com/EHTJulia/EHTNCDBase.jl"
+uuid = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
+version = "0.1.0"
+
 [[deps.EHTUtils]]
 deps = ["Logging", "PhysicalConstants", "Unitful", "UnitfulAngles", "UnitfulAstro"]
-git-tree-sha1 = "0251f03990090ff4bc24b6697a0e2be62f4a3986"
+git-tree-sha1 = "a7e340dd3d068511de5a0a23de70955367a66b47"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTUtils.jl"
 uuid = "9d0fa6a6-ae25-4c2e-8152-6c4b7f2016aa"
@@ -251,6 +259,9 @@ git-tree-sha1 = "656f7a6859be8673bf1f35da5670246b923964f7"
 uuid = "b9860ae5-e623-471e-878b-f6a53c775ea6"
 version = "0.1.1"
 
+[[deps.FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
 git-tree-sha1 = "335bfdceacc84c5cdf16aadc768aa5ddfc5383cc"
@@ -275,9 +286,9 @@ version = "1.1.2"
 
 [[deps.HDF5_jll]]
 deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "OpenSSL_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "fd83fa0bde42e01952757f01149dd968c06c4dba"
+git-tree-sha1 = "c003b31e2e818bc512b0ff99d7dce03b0c1359f5"
 uuid = "0234f1f7-429e-5d53-9886-15a909be8d59"
-version = "1.12.0+1"
+version = "1.12.2+1"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -368,6 +379,12 @@ uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
+[[deps.Libiconv_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "42b62845d70a619f063a7da093d995ec8e15e778"
+uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
+version = "1.16.1+1"
+
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -438,9 +455,9 @@ uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 
 [[deps.NCDatasets]]
 deps = ["CFTime", "DataStructures", "Dates", "NetCDF_jll", "NetworkOptions", "Printf"]
-git-tree-sha1 = "3d81cbe30a384061854c96fac12f02f5e7e372d3"
+git-tree-sha1 = "3044eb4157c896004401144666dab9dd4444b786"
 uuid = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
-version = "0.12.5"
+version = "0.12.6"
 
 [[deps.NFFT]]
 deps = ["AbstractNFFTs", "BasicInterpolators", "Distributed", "FFTW", "FLoops", "Graphics", "LinearAlgebra", "Printf", "Random", "Reexport", "SparseArrays", "SpecialFunctions"]
@@ -461,10 +478,10 @@ uuid = "71a1bf82-56d0-4bbc-8a3c-48b961074391"
 version = "0.1.5"
 
 [[deps.NetCDF_jll]]
-deps = ["Artifacts", "HDF5_jll", "JLLWrappers", "LibCURL_jll", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Pkg", "Zlib_jll", "nghttp2_jll"]
-git-tree-sha1 = "0cf4d1bf2ef45156aed85c9ac5f8c7e697d9288c"
+deps = ["Artifacts", "HDF5_jll", "JLLWrappers", "LibCURL_jll", "Libdl", "Pkg", "XML2_jll", "Zlib_jll"]
+git-tree-sha1 = "c48941e356636fa4e2b5eed006a0ac970c538d80"
 uuid = "7243133f-43d8-5620-bbf4-c2c921802cf3"
-version = "400.702.400+0"
+version = "400.902.5+0"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
@@ -680,6 +697,12 @@ version = "1.1.1"
 git-tree-sha1 = "58d6e80b4ee071f5efd07fda82cb9fbe17200868"
 uuid = "81def892-9a0e-5fdd-b105-ffc91e053289"
 version = "1.3.0"
+
+[[deps.XML2_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "Zlib_jll"]
+git-tree-sha1 = "58443b63fb7e465a8a7210828c91c08b92132dff"
+uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
+version = "2.9.14+0"
 
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
