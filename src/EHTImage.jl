@@ -2,6 +2,7 @@ module EHTImage
 
 # Import external packages
 using Base
+using DimensionalData
 using DocStringExtensions # for docstrings
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror
 using EHTModel
@@ -31,8 +32,7 @@ include("ncimage/io/const.jl")
 include("ncimage/io/reader.jl")
 include("ncimage/io/writer.jl")
 
-#   DimImage
-#include("dimimage/dimimage.jl")
-#include("dimimage/io.jl")
-#include("dimimage/pyplot.jl")
+#   DDImage
+include("ddimage/ddimage.jl")
+include("ddimage/io/reader.jl")
 end

@@ -92,7 +92,7 @@ const ehtimage_metadata_compat = (
 Return the default metadata of the given dataset.
 """
 function default_metadata(::AbstractEHTImage)
-    dict = OrderedDict()
+    dict = OrderedDict{Symbol,Any}()
 
     for key in keys(ehtimage_metadata_default)
         dict[key] = ehtimage_metadata_default[key]
@@ -102,9 +102,13 @@ function default_metadata(::AbstractEHTImage)
 end
 
 """
-    get_xygrid
+    get_xygrid --> Tuple{StepRangeLen, StepRangeLen}
 
-Returning 1-dimensional StepRange objects for the grids along with x and y axis in the given angular unit specified by angunit.
+Returning 1-dimensional StepRangeLen objects for the grids along with x and y axis in the given angular unit specified by angunit.
+
+# Arguments
+- `metadata::Dict{Symbol, Any}-like`: Input dictionary.
+- `angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad`: Angular units of the output pixel grids.
 """
 function get_xygrid(
     metadata,

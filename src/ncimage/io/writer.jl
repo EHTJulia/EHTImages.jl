@@ -152,7 +152,7 @@ end
 Save image data to NetCDF4 format. 
 
 # Arguments
-- `image::NCImage`
+- `image::AbstractEHTImage`
     Input image data
 - `filename::AbstractString`:
     NetCDF4 file where image data will be saved.
@@ -164,7 +164,7 @@ Save image data to NetCDF4 format.
     The group of the image data in the input NetCDF4 file.
 """
 function save_netcdf!(
-    image::NCImage,
+    image::AbstractEHTImage,
     filename::AbstractString;
     mode::Symbol=:create,
     group::AbstractString=ncd_image_defaultgroup
@@ -200,7 +200,8 @@ function save_netcdf!(
     attrib = default_metadata(NCImage())
     #   fill metadata 
     for key in keys(image.metadata)
-        attrib[key] = image.metadata[key]
+        skey = Symbol(key)
+        attrib[skey] = image.metadata[skey]
     end
     #   write metadata
     set_ncd_image_metadata!(outsubds, attrib)
@@ -230,7 +231,7 @@ Save image data to NetCDF4 format. Saved data will be loaded and returned
 with `:read` access mode.
 
 # Arguments
-- `image::NCImage`
+- `image::AbstractEHTImage`
     Input image data
 - `filename::AbstractString`:
     NetCDF4 file where image data will be saved.
@@ -242,7 +243,7 @@ with `:read` access mode.
     The group of the image data in the input NetCDF4 file.
 """
 function save_netcdf(
-    image::NCImage,
+    image::AbstractEHTImage,
     filename::AbstractString;
     mode::Symbol=:create,
     group::AbstractString=ncd_image_defaultgroup

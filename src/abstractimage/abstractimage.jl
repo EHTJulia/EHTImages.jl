@@ -74,25 +74,25 @@ Determines whether the data is disk-based or memory-based.
 Return IsDiskData() if data is disk-based,
 while return NotDiskData() if data is memory-based.
 """
-@inline isdiskdata(image::AbstractEHTImage) = IsDiskData()
+@inline isdiskdata(::AbstractEHTImage) = IsDiskData()
 
 """
-    isopen(image::Abstract)
-
-Check if data is accessible, return true for accessible data
-and false if data is not accessible. This is relevant if
-image is based on disk data.
-"""
-Base.isopen(image::AbstractEHTImage) = false
-
-"""
-    isopen(image::Abstract)
+    isopen(image::AbstractEHTImage)
 
 Check if data is accessible, return true for accessible data
 and false if data is not accessible. This is relevant if
 image is based on disk data.
 """
-Base.iswritable(image::AbstractEHTImage) = false
+Base.isopen(::AbstractEHTImage) = false
+
+"""
+    isopen(image::AbstractEHTImage)
+
+Check if data is accessible, return true for accessible data
+and false if data is not accessible. This is relevant if
+image is based on disk data.
+"""
+Base.iswritable(::AbstractEHTImage) = false
 
 """
     get_xygrid
