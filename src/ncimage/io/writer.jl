@@ -208,7 +208,7 @@ function save_netcdf!(
 
     # set variables
     #   image
-    outsubds[ncd_image_varnames[:image]].var[:] = image.data[:]
+    outsubds[ncd_image_varnames[:image]].var[:, :, :, :, :] = image.data[:, :, :, :, :]
     #   x and y
     xg, yg = get_xygrid(image)
     outsubds[ncd_image_varnames[:x]].var[:] = xg[:]

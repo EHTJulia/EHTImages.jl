@@ -18,15 +18,13 @@ function load(image::NCImage)::DDImage
     metadata = default_metadata(NCImage())
     for key in keys(image.metadata)
         skey = Symbol(key)
-        @show metadata[skey]
-        @show image.metadata[skey]
         metadata[skey] = image.metadata[skey]
     end
 
     # define x, y grids
     xg, yg = get_xygrid(metadata)
-    x = Dim{:x}(-dx * ((1-ixref):1:(nx-ixref)))
-    y = Dim{:y}(+dy * ((1-iyref):1:(ny-iyref)))
+    x = Dim{:x}(xg)
+    y = Dim{:y}(yg)
 
     # define other axises
     p = Dim{:p}(image.pol[:])
