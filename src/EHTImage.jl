@@ -21,19 +21,20 @@ using Unitful, UnitfulAngles, UnitfulAstro # for Units
 # Include 
 #   AbstractImage
 include("abstractimage/abstractimage.jl")
-include("abstractimage/convolve_fftw.jl")
+include("abstractimage/convolution.jl")
 include("abstractimage/metadata.jl")
 include("abstractimage/pyplot.jl")
 
 #   NCImage
 include("ncimage/ncimage.jl")
-include("ncimage/convolve_fftw.jl")
+include("ncimage/convolution.jl")
 include("ncimage/io/const.jl")
 include("ncimage/io/reader.jl")
 include("ncimage/io/writer.jl")
 
 #   DDImage
 include("ddimage/ddimage.jl")
+include("ddimage/convolution.jl")
 include("ddimage/io/reader.jl")
 include("ddimage/io/writer.jl")
 end

@@ -32,10 +32,16 @@ function Base.isopen(image::NCImage)::Bool
     end
 end
 
+# This is a function to check if the image is writable.
 function Base.iswritable(image::NCImage)::Bool
     if isopen(image)
         return image.dataset.iswritable
     else
         return false
     end
+end
+
+# raise error for copy
+function Base.copy(image::NCImage)::Bool
+    @throwerror ArgumentError "Since NCImage is disk-based, copy is not available. Use save_netcdf instead."
 end

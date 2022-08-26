@@ -5,9 +5,12 @@ function convolve(
     model::EHTModel.AbstractModel;
     ex=SequentialEx()
 )::AbstractEHTImage
-    imageout = copy(image)
-    convolve!(imageout, model, ex)
-    return imageout
+    # check if the input is disk-based or not.
+    if isdiskdata(image) == IsDiskData()
+        @throwerror ArgumentError "Please use `convolve(image, filename, modelname; keywords)` instead."
+    end
+
+    return convolve_base(image, model, ex)
 end
 
 function convolve!(
@@ -15,11 +18,30 @@ function convolve!(
     model::EHTModel.AbstractModel;
     ex=SequentialEx()
 )
+    # check if the input image is writable or not.
     if iswritable(image) == false
         @throwerror ArgumentError "Input image is not writable."
     end
 
+    # execute convolution
     convolve_base!(image, model, ex=ex)
+
+    return nothing
+end
+
+
+function convolve_base(
+    image::AbstractEHTImage,
+    model::EHTModel.AbstractModel;
+    ex=SequentialEx()
+)::AbstractEHTImage
+    # copy image
+    newimage = copy(image)
+
+    # run convolution
+    convolve_base!(newimage, model, ex)
+
+    return newimage
 end
 
 function convolve_base!(
