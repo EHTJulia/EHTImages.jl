@@ -32,7 +32,7 @@ function load(image::NCImage)::DDImage
     t = Dim{:t}(image.mjd[:])
 
     # create DimArray data
-    darr = DimArray(
+    dimarray = DimArray(
         data=image.data[:, :, :, :, :],
         dims=(x, y, p, f, t),
         name=:intensity,
@@ -40,14 +40,5 @@ function load(image::NCImage)::DDImage
     )
 
     # create a DDImage instance.
-    ddimage = DDImage(
-        dimarray=darr,
-        metadata=darr.metadata,
-        data=darr.data,
-        pol=darr.dims[3].val.data,
-        freq=darr.dims[4].val.data,
-        mjd=darr.dims[5].val.data
-    )
-
-    return ddimage
+    return create_ddimage(dimarray)
 end

@@ -35,4 +35,5 @@ include("ncimage/io/writer.jl")
 #   DDImage
 include("ddimage/ddimage.jl")
 include("ddimage/io/reader.jl")
+include("ddimage/io/writer.jl")
 end

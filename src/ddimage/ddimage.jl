@@ -39,3 +39,8 @@ end
 @inline isdiskdata(::DDImage) = NotDiskData()
 Base.isopen(::DDImage) = true
 Base.iswritable(::DDImage) = true
+
+# copy
+function Base.copy(im::DDImage)
+    return create_ddimage(copy(im.dimarray))
+end
