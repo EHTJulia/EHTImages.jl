@@ -23,7 +23,7 @@ export get_bconv
 abstract type AbstractEHTImage end
 
 """
-AbstractEHTImage works as an Abstract Array. To make it, 
+AbstractEHTImage works as an Abstract Array-ish. To make it, 
 each image type needs to have four following methods.
 (see: Julia Documentation for "Interfaces")
 

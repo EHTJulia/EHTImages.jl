@@ -9,14 +9,8 @@ function convolve(
     # create a new file
     newim = save_netcdf(image, filename, mode=mode, group=group)
 
-    # open new file in :append mode
-    open!(newim, :append)
-
     # run convolution 
     convolve!(newim, model, ex=ex)
-
-    # reload in :read mode
-    open!(newim, :read)
 
     return newim
 end
@@ -37,7 +31,7 @@ function convolve!(
         open!(image, :append)
     end
 
-    convolve!_base!(image, model, ex=ex)
+    convolve_base!(image, model, ex=ex)
 
     # reopen in :read mode if reopened.
     if flag

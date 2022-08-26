@@ -10,7 +10,13 @@ function convolve(
         @throwerror ArgumentError "Please use `convolve(image, filename, modelname; keywords)` instead."
     end
 
-    return convolve_base(image, model, ex)
+    # copy image
+    newimage = copy(image)
+
+    # run convolution
+    convolve_base!(newimage, model, ex=ex)
+
+    return newimage
 end
 
 function convolve!(
@@ -27,21 +33,6 @@ function convolve!(
     convolve_base!(image, model, ex=ex)
 
     return nothing
-end
-
-
-function convolve_base(
-    image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
-    ex=SequentialEx()
-)::AbstractEHTImage
-    # copy image
-    newimage = copy(image)
-
-    # run convolution
-    convolve_base!(newimage, model, ex)
-
-    return newimage
 end
 
 function convolve_base!(
