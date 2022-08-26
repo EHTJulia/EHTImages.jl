@@ -1,3 +1,6 @@
+export DDImage
+export isopen, iswritable
+
 """
     $(TYPEDEF) <: AbstractEHTImage
 

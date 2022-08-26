@@ -1,3 +1,5 @@
+export load
+
 """
     load(image::NCImage) --> DDImage
     
