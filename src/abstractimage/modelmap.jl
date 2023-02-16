@@ -17,7 +17,7 @@ function map!(
     # mapout kernel
     imarray = Matrix{Float64}(undef, length(xg), length(yg))
     @floop ex for xidx = 1:nx, yidx = 1:ny
-        @inbounds image.data[xidx, yidx, :, :, :] = intensity_point(model, xg[xidx], yg[yidx]) * dxdy
+        @inbounds image.data[xidx, yidx, :, :, :] .= intensity_point(model, xg[xidx], yg[yidx]) * dxdy
     end
 end
 
@@ -38,6 +38,6 @@ function add!(
     # mapout kernel
     imarray = Matrix{Float64}(undef, length(xg), length(yg))
     @floop ex for xidx = 1:nx, yidx = 1:ny
-        @inbounds image.data[xidx, yidx, :, :, :] += intensity_point(model, xg[xidx], yg[yidx]) * dxdy
+        @inbounds image.data[xidx, yidx, :, :, :] .+= intensity_point(model, xg[xidx], yg[yidx]) * dxdy
     end
 end
