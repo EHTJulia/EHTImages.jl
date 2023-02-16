@@ -134,10 +134,10 @@ function get_imextent(
         angconv = unitconv(u"rad", aunit)
 
         nx, ny = size(image.data)[1:2]
-        dx = image.metadata["dx"]
-        dy = image.metadata["dy"]
-        ixref = image.metadata["ixref"]
-        iyref = image.metadata["iyref"]
+        dx = image.metadata[:dx]
+        dy = image.metadata[:dy]
+        ixref = image.metadata[:ixref]
+        iyref = image.metadata[:iyref]
 
         xmax = -dx * (1 - ixref - 0.5)
         xmin = -dx * (nx - ixref + 0.5)
@@ -147,8 +147,8 @@ function get_imextent(
         return [xmax, xmin, ymin, ymax] * angconv
     else
         nx, ny = size(image.data)[1:2]
-        ixref = image.metadata["ixref"]
-        iyref = image.metadata["iyref"]
+        ixref = image.metadata[:ixref]
+        iyref = image.metadata[:iyref]
 
         xmax = -1 * (1 - ixref - 0.5)
         xmin = -1 * (nx - ixref + 0.5)

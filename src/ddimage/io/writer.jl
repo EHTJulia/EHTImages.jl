@@ -1,8 +1,8 @@
 export create_image, create_ddimage
 
 """
-    create_image(filename, nx, dx, angunit; keywords) -> DDImage
-    create_ddimage(filename, nx, dx, angunit; keywords) -> DDImage
+    create_image(nx, dx, angunit; keywords) -> DDImage
+    create_ddimage(nx, dx, angunit; keywords) -> DDImage
 
 Create and return a blank DDImage object.
 
