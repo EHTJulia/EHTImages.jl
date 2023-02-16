@@ -23,6 +23,7 @@ using Unitful, UnitfulAngles, UnitfulAstro # for Units
 include("abstractimage/abstractimage.jl")
 include("abstractimage/convolution.jl")
 include("abstractimage/metadata.jl")
+include("abstractimage/modelmap.jl")
 include("abstractimage/pyplot.jl")
 
 #   NCImage
