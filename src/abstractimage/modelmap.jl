@@ -9,7 +9,7 @@ function map!(
     nx, ny, np, nf, nt = size(image)
 
     # get xy grid
-    xg, yg = get_xygrid(image, false)
+    xg, yg = get_xygrid(image)
 
     # grid size
     dxdy = im.metadata[:dx] * im.metadata[:dy]
@@ -30,7 +30,7 @@ function add!(
     nx, ny, np, nf, nt = size(image)
 
     # get xy grid
-    xg, yg = get_xygrid(image, false)
+    xg, yg = get_xygrid(image)
 
     # grid size
     dxdy = im.metadata[:dx] * im.metadata[:dy]
