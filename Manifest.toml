@@ -189,7 +189,7 @@ version = "1.6.0"
 
 [[deps.EHTModels]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "0230c95ccc75e472d39bdc1efd939ed0b3728dfe"
+git-tree-sha1 = "124b51fb53635ac39a2768b2504b7f4cb34e0e55"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModels.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
