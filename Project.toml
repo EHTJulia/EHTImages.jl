@@ -1,4 +1,4 @@
-name = "EHTImage"
+name = "EHTImages"
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
 authors = ["Kazu Akiyama"]
 version = "0.1.0"
@@ -6,7 +6,7 @@ version = "0.1.0"
 [deps]
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
-EHTModel = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
+EHTModels = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
 EHTNCDBase = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
 EHTUtils = "9d0fa6a6-ae25-4c2e-8152-6c4b7f2016aa"
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"

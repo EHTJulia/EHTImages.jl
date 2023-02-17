@@ -127,8 +127,8 @@ function get_bconv(
 
     if dimension(funit) == dimension(K)
         # pixel size in radian
-        dx = image.metadata["dx"]
-        dy = image.metadata["dy"]
+        dx = image.metadata[:dx]
+        dy = image.metadata[:dy]
 
         # frequency in Hz
         nu = image.freq # freq in Hz
@@ -147,12 +147,12 @@ function get_bconv(
             saconv = 1
         elseif startswith(saunit_low, 'b')
             # pixel size in radian
-            dx = image.metadata["dx"]
-            dy = image.metadata["dy"]
+            dx = image.metadata[:dx]
+            dy = image.metadata[:dy]
 
             # beam size in radian
-            bmaj = image.metadata["beam_maj"]
-            bmin = image.metadata["beam_min"]
+            bmaj = image.metadata[:beam_maj]
+            bmin = image.metadata[:beam_min]
 
             pixelsa = dx * dy
             beamsa = bmaj * bmin * pi / (4 * log(2))

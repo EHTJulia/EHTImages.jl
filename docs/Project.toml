@@ -1,6 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-EHTImage = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
-EHTModel = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
+EHTImages = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
+EHTModels = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
 EHTNCDBase = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
 EHTUtils = "9d0fa6a6-ae25-4c2e-8152-6c4b7f2016aa"

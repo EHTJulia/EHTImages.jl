@@ -1,11 +1,11 @@
-module EHTImage
+module EHTImages
 
 # Import external packages
 using Base
 using DimensionalData
 using DocStringExtensions # for docstrings
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror
-using EHTModel
+using EHTModels
 using EHTNCDBase
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
 using FLoops

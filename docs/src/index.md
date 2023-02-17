@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = EHTImage
+CurrentModule = EHTImages
 ```
 
-# EHTImage
+# EHTImages
 
-Documentation for [EHTImage](https://github.com/EHTJulia/EHTImage.jl).
+Documentation for [EHTImages](https://github.com/EHTJulia/EHTImages.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [EHTImage]
+Modules = [EHTImages]
 ```

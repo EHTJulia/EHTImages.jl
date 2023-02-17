@@ -1,16 +1,16 @@
-using EHTImage
+using EHTImages
 using Documenter
 
-DocMeta.setdocmeta!(EHTImage, :DocTestSetup, :(using EHTImage); recursive=true)
+DocMeta.setdocmeta!(EHTImages, :DocTestSetup, :(using EHTImages); recursive=true)
 
 makedocs(;
-    modules=[EHTImage],
+    modules=[EHTImages],
     authors="Kazu Akiyama",
-    repo="https://github.com/EHTJulia/EHTImage.jl/blob/{commit}{path}#{line}",
-    sitename="EHTImage.jl",
+    repo="https://github.com/EHTJulia/EHTImages.jl/blob/{commit}{path}#{line}",
+    sitename="EHTImages.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://EHTJulia.github.io/EHTImage.jl",
+        canonical="https://EHTJulia.github.io/EHTImages.jl",
         edit_link="main",
         assets=String[]
     ),
@@ -20,6 +20,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/EHTJulia/EHTImage.jl",
+    repo="github.com/EHTJulia/EHTImages.jl",
     devbranch="main"
 )

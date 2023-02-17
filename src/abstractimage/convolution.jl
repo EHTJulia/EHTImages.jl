@@ -1,5 +1,20 @@
 export convolve, convolve!
 
+
+"""
+    $(SIGNATURES) -> AbstractEHTImage
+
+Convolve the input image with a given model, and return
+the convolved image.
+
+# Arguments
+- `image::AbstractEHTImage`: 
+   The input image. It must be not disk-based.
+- `model::EHTModel.AbstractModel`:
+   The model to be used as the convolution kernel. 
+- `ex=SequentialEx()`
+    An executor of FLoops.jl.
+"""
 function convolve(
     image::AbstractEHTImage,
     model::EHTModel.AbstractModel;
@@ -19,6 +34,10 @@ function convolve(
     return newimage
 end
 
+
+"""
+    $(SIGNATURES)
+"""
 function convolve!(
     image::AbstractEHTImage,
     model::EHTModel.AbstractModel;

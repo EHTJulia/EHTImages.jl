@@ -1,6 +1,6 @@
-export map!, add!
+export add!
 
-function map!(
+function Base.map!(
     image::AbstractEHTImage,
     model::EHTModel.AbstractModel;
     ex=SequentialEx()
