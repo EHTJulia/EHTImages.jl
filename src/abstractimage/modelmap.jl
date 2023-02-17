@@ -2,7 +2,7 @@ export add!
 
 function Base.map!(
     image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
+    model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
     # get the number of pixels
@@ -23,7 +23,7 @@ end
 
 function add!(
     image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
+    model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
     # get the number of pixels

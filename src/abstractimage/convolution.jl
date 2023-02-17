@@ -10,14 +10,14 @@ the convolved image.
 # Arguments
 - `image::AbstractEHTImage`: 
    The input image. It must be not disk-based.
-- `model::EHTModel.AbstractModel`:
+- `model::EHTModels.AbstractModel`:
    The model to be used as the convolution kernel. 
 - `ex=SequentialEx()`
     An executor of FLoops.jl.
 """
 function convolve(
     image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
+    model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )::AbstractEHTImage
     # check if the input is disk-based or not.
@@ -40,7 +40,7 @@ end
 """
 function convolve!(
     image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
+    model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
     # check if the input image is writable or not.
@@ -56,7 +56,7 @@ end
 
 function convolve_base!(
     image::AbstractEHTImage,
-    model::EHTModel.AbstractModel;
+    model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
     # get the number of pixels
