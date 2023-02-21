@@ -2,7 +2,7 @@
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "c5a6d02069b2932dceb5cd15a3119adaa2c7898d"
+project_hash = "32f35bd353ddbe5cb46a9cd647271c9822ad4179"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -18,9 +18,9 @@ version = "0.8.2"
 
 [[deps.Accessors]]
 deps = ["Compat", "CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "MacroTools", "Requires", "StaticArrays", "Test"]
-git-tree-sha1 = "b9661b900b50ba475145b311a9a0ef9d2a9c85ea"
+git-tree-sha1 = "4a98a9491dd44348664c371998a75074a6938145"
 uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
-version = "0.1.26"
+version = "0.1.27"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra"]
@@ -86,9 +86,9 @@ version = "1.15.7"
 
 [[deps.ChangesOfVariables]]
 deps = ["ChainRulesCore", "LinearAlgebra", "Test"]
-git-tree-sha1 = "844b061c104c408b24537482469400af6075aae4"
+git-tree-sha1 = "485193efd2176b88e6622a39a246f8c5b600e74e"
 uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
-version = "0.1.5"
+version = "0.1.6"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -168,9 +168,9 @@ version = "0.1.2"
 
 [[deps.DimensionalData]]
 deps = ["Adapt", "ArrayInterfaceCore", "ConstructionBase", "Dates", "Extents", "IntervalSets", "IteratorInterfaceExtensions", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "TableTraits", "Tables"]
-git-tree-sha1 = "c26d8608fc71d81f20092d39a931b4dcc82e51bf"
+git-tree-sha1 = "f538b17201d3bb4331fd5c3169fe93c6d366f409"
 uuid = "0703355e-b756-11e9-17c0-8b28908087d0"
-version = "0.21.3"
+version = "0.24.3"
 
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -189,25 +189,21 @@ version = "1.6.0"
 
 [[deps.EHTModels]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "124b51fb53635ac39a2768b2504b7f4cb34e0e55"
+git-tree-sha1 = "2b68209682477edc29d98cd6eb5c3a9d31e2f8df"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModels.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
-version = "0.1.0"
+version = "0.1.1"
 
 [[deps.EHTNCDBase]]
 deps = ["NCDatasets"]
 git-tree-sha1 = "cd499d4eb498cb8208c32e5ff65fddde66a61d1c"
-repo-rev = "main"
-repo-url = "https://github.com/EHTJulia/EHTNCDBase.jl"
 uuid = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
 version = "0.1.0"
 
 [[deps.EHTUtils]]
 deps = ["Logging", "PhysicalConstants", "Unitful", "UnitfulAngles", "UnitfulAstro"]
 git-tree-sha1 = "25bd6a4de49f105cf2d354113c47dee6b4ad7968"
-repo-rev = "main"
-repo-url = "https://github.com/EHTJulia/EHTUtils.jl"
 uuid = "9d0fa6a6-ae25-4c2e-8152-6c4b7f2016aa"
 version = "0.1.0"
 
@@ -363,9 +359,9 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LogExpFunctions]]
 deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
-git-tree-sha1 = "680e733c3a0a9cea9e935c8c2184aea6a63fa0b5"
+git-tree-sha1 = "0a1b7c2863e44523180fdb3146534e265a91870b"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.3.21"
+version = "0.3.23"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -429,9 +425,9 @@ version = "2022.2.1"
 
 [[deps.NCDatasets]]
 deps = ["CFTime", "DataStructures", "Dates", "NetCDF_jll", "NetworkOptions", "Printf"]
-git-tree-sha1 = "d3e32d2b0530d929a047ceab8799ae4204de6c88"
+git-tree-sha1 = "fe130b7201b7fd908d950076dbfc0671270894c5"
 uuid = "85f8d34a-cbdd-5861-8df4-14fed0d494ab"
-version = "0.12.12"
+version = "0.12.13"
 
 [[deps.NFFT]]
 deps = ["AbstractNFFTs", "BasicInterpolators", "Distributed", "FFTW", "FLoops", "LinearAlgebra", "Printf", "Random", "Reexport", "SnoopPrecompile", "SparseArrays", "SpecialFunctions"]
@@ -603,9 +599,9 @@ version = "0.1.15"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "Random", "StaticArraysCore", "Statistics"]
-git-tree-sha1 = "67d3e75e8af8089ea34ce96974d5468d4a008ca6"
+git-tree-sha1 = "2d7d9e1ddadc8407ffd460e24218e37ef52dd9a3"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.5.15"
+version = "1.5.16"
 
 [[deps.StaticArraysCore]]
 git-tree-sha1 = "6b7ba252635a5eff6a0b0664a41ee140a1c9e72a"
