@@ -1,6 +1,6 @@
-using EHTImage
+using EHTImages
 using Test
 
-@testset "EHTImage.jl" begin
+@testset "EHTImages.jl" begin
     # Write your tests here.
 end
