@@ -39,7 +39,7 @@ jobs:
           files: lcov.info
   docs:
     name: Documentation
-    runs-on: maxos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
