@@ -2,7 +2,7 @@
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "8fd97d43574b8d2c92eb04140fd6719d775e9286"
+project_hash = "cee18ac1258b5589e7760933ac410c1187e1440e"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -136,9 +136,9 @@ version = "1.8.0"
 
 [[deps.ConstructionBase]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "fb21ddd70a051d882a1686a5a550990bbe371a95"
+git-tree-sha1 = "45269494fcfa0cc14032b7aa640fa71320e1976e"
 uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-version = "1.4.1"
+version = "1.5.0"
 
 [[deps.ContextVariablesX]]
 deps = ["Compat", "Logging", "UUIDs"]
@@ -199,8 +199,8 @@ uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 version = "1.6.0"
 
 [[deps.EHTImages]]
-deps = ["DimensionalData", "DocStringExtensions", "EHTModels", "EHTNCDBase", "EHTUtils", "FFTW", "FLoops", "Formatting", "Logging", "Missings", "NCDatasets", "OrderedCollections", "Parameters", "PyPlot", "Unitful", "UnitfulAngles", "UnitfulAstro"]
-git-tree-sha1 = "63b35254ba69de7062204e3a9d285a20a13020f7"
+deps = ["DimensionalData", "DocStringExtensions", "EHTModels", "EHTNCDBase", "EHTUtils", "FFTW", "FLoops", "Formatting", "Logging", "Missings", "NCDatasets", "OrderedCollections", "Parameters", "Pkg", "PyPlot", "Unitful", "UnitfulAngles", "UnitfulAstro"]
+git-tree-sha1 = "0e2e6c8560449124cbcaede03e0ca8730797be01"
 repo-rev = "main"
 repo-url = ".."
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
@@ -208,7 +208,7 @@ version = "0.1.0"
 
 [[deps.EHTModels]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "73a61001a2fe6473599d8dd6dcb4572342186430"
+git-tree-sha1 = "375a3fe1b904031b5932f8bb3b58ce5b742c425e"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModels.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
