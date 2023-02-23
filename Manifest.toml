@@ -2,7 +2,7 @@
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "281f5d6fcf166a3e28e30b30d23fe1bb63ae26f6"
+project_hash = "6b9afc14c29dc565031aca921e7ef01861ac47c7"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -131,9 +131,9 @@ version = "1.8.0"
 
 [[deps.ConstructionBase]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "fb21ddd70a051d882a1686a5a550990bbe371a95"
+git-tree-sha1 = "45269494fcfa0cc14032b7aa640fa71320e1976e"
 uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-version = "1.4.1"
+version = "1.5.0"
 
 [[deps.ContextVariablesX]]
 deps = ["Compat", "Logging", "UUIDs"]
@@ -189,7 +189,7 @@ version = "1.6.0"
 
 [[deps.EHTModels]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "73a61001a2fe6473599d8dd6dcb4572342186430"
+git-tree-sha1 = "375a3fe1b904031b5932f8bb3b58ce5b742c425e"
 repo-rev = "main"
 repo-url = "https://github.com/EHTJulia/EHTModels.jl"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
