@@ -1,5 +1,4 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 EHTImages = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
-EHTModels = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
