@@ -2,7 +2,7 @@
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "6b9afc14c29dc565031aca921e7ef01861ac47c7"
+project_hash = "e558dca60ddcada867d4f315b298196147055912"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -23,10 +23,10 @@ uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
 version = "0.1.28"
 
 [[deps.Adapt]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "0310e08cb19f5da31d08341c6120c047598f5b9c"
+deps = ["LinearAlgebra", "Requires"]
+git-tree-sha1 = "cc37d689f599e8df4f464b2fa3870ff7db7492ef"
 uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-version = "3.5.0"
+version = "3.6.1"
 
 [[deps.ArgCheck]]
 git-tree-sha1 = "a3a402a35a2f7e0b87828ccabbd5ebfbebe356b4"
@@ -65,6 +65,18 @@ deps = ["LinearAlgebra", "Memoize", "Random"]
 git-tree-sha1 = "3f7be532673fc4a22825e7884e9e0e876236b12a"
 uuid = "26cce99e-4866-4b6d-ab74-862489e035e0"
 version = "0.7.1"
+
+[[deps.CFITSIO]]
+deps = ["CFITSIO_jll"]
+git-tree-sha1 = "8425c47db102577eefb93cb37b4480e750116b0d"
+uuid = "3b1b4be9-1499-4b22-8d78-7db3344d1961"
+version = "1.4.1"
+
+[[deps.CFITSIO_jll]]
+deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "Pkg", "Zlib_jll"]
+git-tree-sha1 = "9c91a9358de42043c3101e3a29e60883345b0b39"
+uuid = "b3e40c51-02ae-5482-8a39-3ace5868dcf4"
+version = "4.0.0+0"
 
 [[deps.CFTime]]
 deps = ["Dates", "Printf"]
@@ -189,9 +201,9 @@ version = "1.6.0"
 
 [[deps.EHTModels]]
 deps = ["Accessors", "DocStringExtensions", "EHTUtils", "NFFT"]
-git-tree-sha1 = "73a61001a2fe6473599d8dd6dcb4572342186430"
+git-tree-sha1 = "89a98ac9d2369582d4b393ea61fc0f16e37f641a"
 uuid = "aba06f68-8285-4329-b7bf-b3157c6bc00b"
-version = "0.1.1"
+version = "0.1.2"
 
 [[deps.EHTNCDBase]]
 deps = ["NCDatasets"]
@@ -221,6 +233,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "c6033cc3892d0ef5bb9cd29b7f2f0331ea5184ea"
 uuid = "f5851436-0d7a-5f13-b9de-f02708fd171a"
 version = "3.3.10+0"
+
+[[deps.FITSIO]]
+deps = ["CFITSIO", "Printf", "Reexport", "Tables"]
+git-tree-sha1 = "3b342f0c3bb37371e1e2ad37672a9c960f9abcb6"
+uuid = "525bcba6-941b-5504-bd06-fd0dc1a4d2eb"
+version = "0.17.0"
 
 [[deps.FLoops]]
 deps = ["BangBang", "Compat", "FLoopsBase", "InitialValues", "JuliaVariables", "MLStyle", "Serialization", "Setfield", "Transducers"]
@@ -287,9 +305,9 @@ uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
 version = "0.1.8"
 
 [[deps.IrrationalConstants]]
-git-tree-sha1 = "3868cac300a188a7c3a74f9abd930e52ce1a7a51"
+git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
-version = "0.2.1"
+version = "0.2.2"
 
 [[deps.IteratorInterfaceExtensions]]
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
@@ -553,9 +571,9 @@ version = "1.3.0"
 
 [[deps.Roots]]
 deps = ["ChainRulesCore", "CommonSolve", "Printf", "Setfield"]
-git-tree-sha1 = "a3db467ce768343235032a1ca0830fc64158dadf"
+git-tree-sha1 = "9c2f5d3768804ed465f0c51540c6074ae9f63900"
 uuid = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
-version = "2.0.8"
+version = "2.0.9"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
@@ -660,9 +678,9 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[deps.Unitful]]
 deps = ["ConstructionBase", "Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "d3f95a76c89777990d3d968ded5ecf12f9a0ad72"
+git-tree-sha1 = "bb37ed24f338bc59b83e3fc9f32dd388e5396c53"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.12.3"
+version = "1.12.4"
 
 [[deps.UnitfulAngles]]
 deps = ["Dates", "Unitful"]

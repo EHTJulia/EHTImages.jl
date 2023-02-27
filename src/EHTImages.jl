@@ -2,12 +2,14 @@ module EHTImages
 
 # Import external packages
 using Base
+using Dates
 using DimensionalData
 using DocStringExtensions # for docstrings
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror
 using EHTModels
 using EHTNCDBase
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
+using FITSIO
 using FLoops
 using Formatting # for python-ish string formatter
 using Logging
@@ -25,6 +27,7 @@ include("abstractimage/convolution.jl")
 include("abstractimage/metadata.jl")
 include("abstractimage/modelmap.jl")
 include("abstractimage/pyplot.jl")
+include("abstractimage/io/fitswriter.jl")
 
 #   NCImage
 include("ncimage/ncimage.jl")
