@@ -67,7 +67,7 @@ function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=
         "unit of CRVAL1 and CDELT1")
 
     # Dec Axis
-    set!(header, "CTYPE2", "RA---SIN",
+    set!(header, "CTYPE2", "DEC--SIN",
         "data axis 2: Declination (DEC)"
     )
     set!(header, "CRVAL2", obsdec,
