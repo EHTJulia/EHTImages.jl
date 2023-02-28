@@ -1,6 +1,15 @@
-export read_fits
+export load_fits
 
-function load_fits(filename::AbstractString, hduid=1)
+"""
+    load_fits(filename::AbstractString, hduid::Integer=1)
+
+Load the input FITS image into DDImage (in-memory image data).
+
+# Arguments
+- `filename::AbstractString`: name of the input FITS file
+- `hduid::Integer=1`: ID of the HDU to be loaded. Default to the primary HDU.
+"""
+function load_fits(filename::AbstractString, hduid=1)::DDImage
     f = FITS(filename, "r")
     hdu = f[hduid]
     image = load_fits(hdu)
@@ -8,7 +17,30 @@ function load_fits(filename::AbstractString, hduid=1)
     return image
 end
 
-function load_fits(hdu::ImageHDU)
+"""
+    load_fits(filename::FITS, hduid::Integer=1)
+
+Load the input FITS image into DDImage (in-memory image data).
+
+# Arguments
+- `fits::FITS`: the input FITS data
+- `hduid::Integer=1`: ID of the HDU to be loaded. Default to the primary HDU.
+"""
+function load_fits(fits::FITS, hduid=1)::DDImage
+    hdu = fits[hduid]
+    image = load_fits(hdu)
+    return image
+end
+
+"""
+    load_fits(hdu)
+
+Load the input FITS image into DDImage (in-memory image data).
+
+# Arguments
+- `hdu::ImageHDU`: the input image HDU data
+"""
+function load_fits(hdu::ImageHDU)::DDImage
     # Check the dimension of the input HDU
     naxis = ndims(hdu)
     if naxis == 2
