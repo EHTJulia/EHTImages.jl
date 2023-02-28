@@ -180,7 +180,7 @@ function load_fits(hdu::ImageHDU)::DDImage
     end
 
     if "CDELT1" in header_keys
-        metadata[:dx] = -abs(deg2rad(header["CDELT1"]))
+        metadata[:dx] = abs(deg2rad(header["CDELT1"]))
     end
 
     if "CDELT2" in header_keys
@@ -189,10 +189,14 @@ function load_fits(hdu::ImageHDU)::DDImage
 
     if "CRPIX1" in header_keys
         metadata[:ixref] = header["CRPIX1"]
+    else
+        metadata[:ixref] = (nx + 1) / 2
     end
 
     if "CRPIX2" in header_keys
         metadata[:iyref] = header["CRPIX2"]
+    else
+        metadata[:iyref] = (ny + 1) / 2
     end
 
     metadata[:nx] = nx
