@@ -106,7 +106,7 @@ function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=
     set!(header, "FREQ", image.freq[fidx], "Reference Frequency in Hz")
 
     # OBS DATE
-    set!(header, "OBSDATE", Dates.format(julian2datetime(2400000.5 + mjd), "yyyy-mm-dd"),
+    set!(header, "OBSDATE", Dates.format(mjd2datetime(mjd), "yyyy-mm-dd"),
         "Observation Date")
     set!(header, "MJD", mjd, "Modified Julian Date")
 

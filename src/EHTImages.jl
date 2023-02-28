@@ -5,7 +5,7 @@ using Base
 using Dates
 using DimensionalData
 using DocStringExtensions # for docstrings
-using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror
+using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd
 using EHTModels
 using EHTNCDBase
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT

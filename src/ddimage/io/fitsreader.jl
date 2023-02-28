@@ -105,7 +105,7 @@ function load_fits(hdu::ImageHDU)::DDImage
     end
 
     # Load Time
-    mjd = [datetime2julian(now()) - 2400000.5]
+    mjd = [datetime2mjd(now())]
     if "MJD" in header_keys
         mjd = [header["MJD"]]
     else
@@ -113,10 +113,10 @@ function load_fits(hdu::ImageHDU)::DDImage
         for key in date_keys
             if key in header_keys
                 try
-                    mjd = [datetime2julian(DateTime(header[key] - 2400000.5, "yyyy-mm-dd"))]
+                    mjd = [datetime2mjd(DateTime(header[key], "yyyy-mm-dd"))]
                     break
                 catch
-                    print("Warning: non-standard format is used for ", key, ".\n")
+                    print("Warning: non-standard value is found for ", key, ".\n")
                 end
             end
         end
