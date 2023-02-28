@@ -112,7 +112,7 @@ function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=
 
     # Instruments
     set!(header, "OBSERVER", metadata[:observer], "Name of the observer")
-    set!(header, "TELESCOP", metadata[:observer], "Name of the observing instrument")
+    set!(header, "TELESCOP", metadata[:instrument], "Name of the observing instrument")
 
     # Unit of the brightness
     set!(header, "BUNIT", "JY/PIXEL", "Unif of the intensity")
