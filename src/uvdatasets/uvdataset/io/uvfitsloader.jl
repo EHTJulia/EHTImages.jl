@@ -1,6 +1,13 @@
 export load_uvfits
 
-function load_uvfits(filename::AbstractString)
+"""
+    load_uvfits(filename::AbstractString)::UVDataSet
+
+load visibility data from the given uvfits file. 
+Data will be loaded through astropy.io.fits module
+loaded by PyCall.
+"""
+function load_uvfits(filename::AbstractString)::UVDataSet
     # Load pyfits
     copy!(pyfits, pyimport_conda("astropy.io.fits", "astropy"))
 

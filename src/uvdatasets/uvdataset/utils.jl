@@ -2,6 +2,9 @@ export concat, append
 
 """
     concat(dataset1::DimStack, dataset2::DimStack)
+
+Concatanate two DimStack data sets. If keys are duplicated, dimarrays of dataset1
+will be overwritten.
 """
 function concat(dataset1::DimStack, dataset2::DimStack)
     keys1 = keys(dataset1)
@@ -13,6 +16,11 @@ function concat(dataset1::DimStack, dataset2::DimStack)
     return ds
 end
 
+"""
+    append(dataset::DimStack, array::DimArray)
+
+Append a DimArray data into the given DimStack data set.
+"""
 function append(ds::DimStack, array::DimArray)
     name = array.name
     key_list = keys(ds)
@@ -23,6 +31,11 @@ function append(ds::DimStack, array::DimArray)
     return outds
 end
 
+"""
+    Base.append!(dataset::DimStack, array::DimArray)
+
+Append a DimArray data into the given DimStack data set.
+"""
 function Base.append!(ds::DimStack, array::DimArray)
     ds = append(ds, array)
 end

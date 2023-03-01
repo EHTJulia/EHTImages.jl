@@ -38,6 +38,9 @@ function Base.copy(uvd::UVDataSet)
 end
 
 # compute frequency
+"""
+    compute_ν(ds::DimStack)
+"""
 function compute_ν(ds::DimStack)
     c, s, _ = dims(ds)
     nch, nspw, _ = size(ds)
@@ -56,6 +59,12 @@ function compute_ν(ds::DimStack)
     return outds
 end
 
+"""
+    compute_ν!(uvdata::UVDataSet, datakeys=nothing)
+
+Recalculate the observing frequency ν for data sets given
+by datakeys.
+"""
 function compute_ν!(uvdata::UVDataSet, datakeys=nothing)
     if isnothing(datakeys)
         updatekeys = keys(uvdata)
@@ -73,11 +82,20 @@ function compute_ν!(uvdata::UVDataSet, datakeys=nothing)
     return
 end
 
+"""
+    compute_ν(uvdata::UVDataSet, datakeys=nothing)
+
+Recalculate the observing frequency ν for data sets given
+by datakeys.
+"""
 function compute_ν(uvdata::UVDataSet, datakeys=nothing)
     outuvdata = copy(uvdata)
     compute_ν!(outuvdata, datakeys)
 end
 
+"""
+    compute_uvw(ds::DimStack)
+"""
 function compute_uvw(ds::DimStack)
     # get size
     nch, nspw, ndata, _ = size(ds)
@@ -109,6 +127,13 @@ function compute_uvw(ds::DimStack)
     return outds
 end
 
+"""
+    compute_uvw!(uvdata::UVDataSet)
+
+Recalculate uvw coordinates of the `:visibility` data set
+using `:usec`, `:vsec`, `:wsec`, `:ν` fields. 
+For instance, u is given by usec * ν.
+"""
 function compute_uvw!(uvdata::UVDataSet)
     if :visibility ∈ keys(uvdata)
         uvdata[:visibility] = compute_uvw(uvdata[:visibility])
@@ -117,6 +142,14 @@ function compute_uvw!(uvdata::UVDataSet)
     return
 end
 
+
+"""
+    compute_uvw(uvdata::UVDataSet)
+
+Recalculate uvw coordinates of the `:visibility` data set
+using `:usec`, `:vsec`, `:wsec`, `:ν` fields. 
+For instance, u is given by usec * ν.
+"""
 function compute_uvw(uvdata::UVDataSet)
     outuvdata = copy(uvdata)
     compute_uvw!(outuvdata)
