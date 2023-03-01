@@ -39,7 +39,7 @@ jobs:
       - uses: codecov/codecov-action@v2
         with:
           files: lcov.info
-    before_script:
+    before_install:
       - julia -e 'using Pkg; Pkg.add("Conda"); using Conda; Conda.add("numpy"); Conda.add("matplotlib"); Conda.add("astropy")';
       - julia -e 'using Pkg; Pkg.add("PyCall"); ENV["PYTHON"]=""; Pkg.build("PyCall")'
   docs:
@@ -62,6 +62,6 @@ jobs:
            using EHTImages
             DocMeta.setdocmeta!(EHTImages, :DocTestSetup, :(using EHTImages); recursive=true)
             doctest(EHTImages)'
-    before_script:
+    before_install:
       - julia -e 'using Pkg; Pkg.add("Conda"); using Conda; Conda.add("numpy"); Conda.add("matplotlib"); Conda.add("astropy")';
       - julia -e 'using Pkg; Pkg.add("PyCall"); ENV["PYTHON"]=""; Pkg.build("PyCall")'
