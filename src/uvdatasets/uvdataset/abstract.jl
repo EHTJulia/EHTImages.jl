@@ -1,6 +1,6 @@
 export UVDataSet
-export compute_ν
-export compute_ν!
+export compute_ν, compute_ν!
+export compute_uvw, compute_uvw!
 
 struct UVDataSet <: AbstractUVDataSet
     datasets::OrderedDict
@@ -78,7 +78,7 @@ function compute_ν(uvdata::UVDataSet, datakeys=nothing)
     compute_ν!(outuvdata, datakeys)
 end
 
-function calc_uvw(ds::DimStack)
+function compute_uvw(ds::DimStack)
     # get size
     nch, nspw, ndata, _ = size(ds)
     c, s, d, _ = dims(ds)
@@ -109,16 +109,16 @@ function calc_uvw(ds::DimStack)
     return outds
 end
 
-function calc_uvw!(uvdata::UVDataSet)
+function compute_uvw!(uvdata::UVDataSet)
     if :visibility ∈ keys(uvdata)
-        uvdata[:visibility] = calc_uvw(uvdata[:visibility])
+        uvdata[:visibility] = compute_uvw(uvdata[:visibility])
     end
 
     return
 end
 
-function calc_uvw(uvdata::UVDataSet)
+function compute_uvw(uvdata::UVDataSet)
     outuvdata = copy(uvdata)
-    calc_uvw!(outuvdata)
+    compute_uvw!(outuvdata)
     return outuvdata
 end
