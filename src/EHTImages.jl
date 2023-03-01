@@ -5,7 +5,7 @@ using Base
 using Dates
 using DimensionalData
 using DocStringExtensions # for docstrings
-using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd
+using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
 using EHTModels
 using EHTNCDBase
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
@@ -19,6 +19,16 @@ using OrderedCollections # to use OrderedDictionary
 using Parameters # for more flexible definitions of struct
 using PyPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
+
+# For UVDATA
+using Conda
+using DataFrames
+using PyCall
+using Statistics
+
+# For UVDATA
+const numpy = PyCall.PyNULL()
+const pyfits = PyCall.PyNULL()
 
 # Include 
 #   AbstractImage
@@ -41,5 +51,11 @@ include("ddimage/ddimage.jl")
 include("ddimage/io/reader.jl")
 include("ddimage/io/writer.jl")
 include("ddimage/io/fitsreader.jl")
+
+#  tentatively put UVDATA module here
+include("uvdatasets/abstractuvdataset/abstract.jl")
+include("uvdatasets/uvdataset/abstract.jl")
+include("uvdatasets/uvdataset/utils.jl")
+include("uvdatasets/uvdataset/io/uvfitsloader.jl")
 
 end

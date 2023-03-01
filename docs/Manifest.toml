@@ -2,7 +2,7 @@
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "b947d890e87356bc8351422a9efd7cd4e06154a7"
+project_hash = "7892bffad34f8b9dd12c0178dae7878f71989286"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -185,9 +185,9 @@ version = "0.1.2"
 
 [[deps.DimensionalData]]
 deps = ["Adapt", "ArrayInterfaceCore", "ConstructionBase", "Dates", "Extents", "IntervalSets", "IteratorInterfaceExtensions", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "TableTraits", "Tables"]
-git-tree-sha1 = "b09a33e447a553f6fc943bca30b679d369d20132"
+git-tree-sha1 = "5ebee0abcf1c3c514c67bd642f9c0b8192ad30ef"
 uuid = "0703355e-b756-11e9-17c0-8b28908087d0"
-version = "0.24.4"
+version = "0.24.5"
 
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -212,7 +212,7 @@ version = "1.6.0"
 
 [[deps.EHTImages]]
 deps = ["Dates", "DimensionalData", "DocStringExtensions", "EHTModels", "EHTNCDBase", "EHTUtils", "FFTW", "FITSIO", "FLoops", "Formatting", "Logging", "Missings", "NCDatasets", "OrderedCollections", "Parameters", "Pkg", "PyPlot", "Unitful", "UnitfulAngles", "UnitfulAstro"]
-git-tree-sha1 = "56379335fe3730f3610c5393efdce522486fc564"
+git-tree-sha1 = "3261905f95a62eba1c3374e982013c2c6816553b"
 repo-rev = "main"
 repo-url = ".."
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"

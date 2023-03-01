@@ -1,4 +1,7 @@
 name: CI
+before_script:
+  - julia -e 'using Pkg; Pkg.add("Conda"); using Conda; Conda.add("numpy"); Conda.add("matplotlib"); Conda.add("astropy")';
+  - julia -e 'using Pkg; Pkg.add("PyCall"); ENV["PYTHON"]=""; Pkg.build("PyCall")'
 on:
   push:
     branches:

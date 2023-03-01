@@ -1,8 +1,3 @@
-using Pkg
-ENV["PYTHON"]=""
-Pkg.build("PyCall")
-using PyPlot
-
 using EHTImages
 using Documenter
 
