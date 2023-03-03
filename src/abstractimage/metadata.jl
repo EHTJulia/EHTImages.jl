@@ -1,4 +1,5 @@
 export default_metadata
+export copy_metadata!
 
 """
     ehtimage_metadata_default::NamedTuple
@@ -164,4 +165,17 @@ function get_uvgrid(metadata, dofftshift::Bool=true)
     end
 
     return (ug, vg)
+end
+
+"""
+    copy_metadata!(image::AbstractEHTImage, uvdataset::AbstractUVDataSet)
+
+copy metadata from the given uvdataset.
+"""
+function copy_metadata!(image::AbstractEHTImage, uvdataset::AbstractUVDataSet)
+    for key in [:source, :instrument, :observer, :coordsys, :equinox]
+        image.metadata[key] = uvdataset.metadata[key]
+    end
+    image.metadata[:xref] = uvdataset.metadata[:ra]
+    image.metadata[:yref] = uvdataset.metadata[:dec]
 end

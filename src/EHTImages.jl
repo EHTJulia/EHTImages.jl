@@ -30,6 +30,12 @@ using Statistics
 const numpy = PyCall.PyNULL()
 const pyfits = PyCall.PyNULL()
 
+#  tentatively put UVDATA module here
+include("uvdatasets/abstractuvdataset/abstract.jl")
+include("uvdatasets/uvdataset/abstract.jl")
+include("uvdatasets/uvdataset/utils.jl")
+include("uvdatasets/uvdataset/io/uvfitsloader.jl")
+
 # Include 
 #   AbstractImage
 include("abstractimage/abstractimage.jl")
@@ -51,11 +57,5 @@ include("ddimage/ddimage.jl")
 include("ddimage/io/reader.jl")
 include("ddimage/io/writer.jl")
 include("ddimage/io/fitsreader.jl")
-
-#  tentatively put UVDATA module here
-include("uvdatasets/abstractuvdataset/abstract.jl")
-include("uvdatasets/uvdataset/abstract.jl")
-include("uvdatasets/uvdataset/utils.jl")
-include("uvdatasets/uvdataset/io/uvfitsloader.jl")
 
 end
