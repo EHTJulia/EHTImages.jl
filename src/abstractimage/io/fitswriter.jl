@@ -125,7 +125,7 @@ function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=
     set!(header, "PULSETYPE", uppercase(metadata[:pulsetype]), "Type of the pulse function")
 
     # Write the image with the header.
-    write(f, permutedims(reshape(getindex(image.data, :, :, :, idx...), nx, ny, 1, np), (2, 1, 3, 4)), header=header)
+    write(f, permutedims(reshape(getindex(image.data, :, :, :, idx...), nx, ny, 1, np), (1, 2, 3, 4)), header=header)
 
     close(f)
 end

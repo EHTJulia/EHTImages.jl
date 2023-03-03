@@ -28,11 +28,13 @@ EHTImages.jl uses [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) for the imag
 will need to have the Python [Matplotlib](http://matplotlib.org/) library installed on your machine in some way.
 Please see the documentation of [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl).
 
+
 ## Documentation
 The documentation is in preparation, but docstrings of available functions are listed for the [latest](https://ehtjulia.github.io/EHTImages.jl/dev) version. The stable version has not been released. 
 
+
 ## Acknowledgement
-The development of this package has been finantially supported by the following
-- v0.1.0 - v0.1.3: [ALMA North American Development Study Cycle 8](https://science.nrao.edu/facilities/alma/science_sustainability/alma-develop-history), National Radio Astronomy Observatory (NRAO), USA
+The development of this package has been finantially supported by the following programs.
+- v0.1.0 - v0.1.4: [ALMA North American Development Study Cycle 8](https://science.nrao.edu/facilities/alma/science_sustainability/alma-develop-history), National Radio Astronomy Observatory (NRAO), USA
 
 The National Radio Astronomy Observatory is a facility of the National Science Foundation operated under cooperative agreement by Associated Universities, Inc.

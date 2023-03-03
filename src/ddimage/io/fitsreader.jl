@@ -214,10 +214,8 @@ function load_fits(hdu::ImageHDU)::DDImage
 
     # Load Image Data
     data = read(hdu)
-    if naxis == 2
-        data = permutedims(data, (2, 1))
-    else
-        data = permutedims(data, (2, 1, 4, 3))
+    if naxis == 4
+        data = permutedims(data, (1, 2, 4, 3))
     end
     data = reshape(data, nx, ny, np, nf, nt)
 

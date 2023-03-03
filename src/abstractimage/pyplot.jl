@@ -6,11 +6,11 @@ export plot_xylabel
 function imshow(
     image::AbstractEHTImage;
     angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
-    fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=Jy,
+    fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=K,
     saunit::Union{String,Unitful.Units,Unitful.Quantity}="pixel",
     idx=[1, 1, 1],
     cmap="afmhot",
-    scale::String="linear",
+    scale::Symbol=:linear,
     gamma::Number=0.5,
     dyrange::Number=1000,
     vmax=nothing,
@@ -18,7 +18,8 @@ function imshow(
     relative=false,
     axisoff=false,
     axislabel=true,
-    add_colorbar=false,
+    add_colorbar=true,
+    interpolation="bilinear",
     imshowargs...)
 
     # get angular unit
@@ -59,13 +60,13 @@ function imshow(
         nmax = vmax
     end
 
-    if lowercase(scale) == "log"
+    if scale == :log
         nmin = nmax / dyrange
         norm = matplotlib[:colors][:LogNorm](vmin=nmin, vmax=nmax)
         imarr[imarr.<nmax/dyrange] .= nmin
         nmin = nothing
         nmax = nothing
-    elseif lowercase(scale) == "gamma"
+    elseif scale == :gamma
         if vmin isa Nothing
             nmin = 0
         elseif relative == true
@@ -75,7 +76,7 @@ function imshow(
         norm = matplotlib[:colors][:PowerNorm](vmin=nmin, vmax=nmax, gamma=gamma)
         nmin = nothing
         nmax = nothing
-    elseif lowercase(scale) == "linear"
+    elseif scale == :linear
         if vmin isa Nothing
             nmin = minimum([minimum(imarr), 0])
         elseif relative
@@ -85,14 +86,14 @@ function imshow(
         end
         norm = nothing
     else
-        @throwerror ArgumentError "scale must be log, gamma or linear"
+        @throwerror ArgumentError "scale must be :log, :gamma or :linear"
     end
 
     imsobj = PyPlot.imshow(
-        imarr,
+        transpose(imarr),
         origin="lower", extent=imextent,
         vmin=nmin, vmax=nmax, norm=norm,
-        cmap=cmap, interpolation="bilinear",
+        cmap=cmap, interpolation=interpolation,
         imshowargs...)
 
     outdict = Dict()
@@ -107,7 +108,7 @@ function imshow(
     end
 
     if add_colorbar
-        outdict["colorbarobj"] = plot_colorbar(funit)
+        outdict["colorbarobj"] = plot_colorbar(funit, saunit)
     end
 
     return outdict
@@ -182,22 +183,35 @@ function plot_xylabel(
 end
 
 function plot_colorbar(
-    fluxunit::Union{Unitful.Units,Unitful.Quantity,String};
+    fluxunit,
+    saunit;
     colorbarargs...)
 
-    # get flux unit
-    if fluxunit isa String
-        funit = get_unit(fluxunit)
-    else
-        funit = fluxunit
-    end
-
-    if dimension(funit) == dimension(u"K")
-        label = format("Brightness Temperature ({})", string(funit))
-    else
-        label = format("Intensity ({})", string(funit))
-    end
+    label = intensity_label(fluxunit, saunit)
 
     cbarobj = colorbar(label=label, colorbarargs...)
     return cbarobj
+end
+
+
+function intensity_label(
+    funit,
+    saunit,
+)
+    funitlabel = string(funit)
+    if dimension(funit) == dimension(K)
+        saunitlabel = ""
+    elseif saunit == "pixel"
+        saunitlabel = "/" * "pixel"
+    else
+        saunitlabel = "/" * string(saunit) * "^2"
+    end
+
+    intunitlabel = funitlabel * saunitlabel
+
+    if dimension(funit) == dimension(K)
+        label = format("Brightness Temperature ({})", intunitlabel)
+    else
+        label = format("Intensity ({})", intunitlabel)
+    end
 end
