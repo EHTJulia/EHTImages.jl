@@ -1,7 +1,7 @@
 name = "EHTImages"
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
 authors = ["Kazu Akiyama"]
-version = "0.1.3"
+version = "0.1.4"
 
 [deps]
 Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
