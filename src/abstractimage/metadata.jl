@@ -172,7 +172,7 @@ end
 
 copy metadata from the given uvdataset.
 """
-function copy_metadata!(image::AbstractEHTImage, uvdataset::AbstractUVDataSet)
+function copy_metadata!(image::AbstractEHTImage, uvdataset::EHTUVData.AbstractUVDataSet)
     for key in [:source, :instrument, :observer, :coordsys, :equinox]
         image.metadata[key] = uvdataset.metadata[key]
     end

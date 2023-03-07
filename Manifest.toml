@@ -1,8 +1,8 @@
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.0"
+julia_version = "1.8.5"
 manifest_format = "2.0"
-project_hash = "ba4b84306daf572759a8611d781090b99ebce6b5"
+project_hash = "55f0ffc03c510251ac7a94de1db7a158cfca745c"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -128,7 +128,7 @@ version = "4.6.0"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "0.5.2+0"
+version = "1.0.1+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "455419f7e328a1a2493cabc6428d79e951349769"
@@ -220,6 +220,12 @@ version = "0.1.2"
 deps = ["NCDatasets"]
 git-tree-sha1 = "cd499d4eb498cb8208c32e5ff65fddde66a61d1c"
 uuid = "0d1a6071-c6ae-40ce-b68e-43bf1c0beb66"
+version = "0.1.0"
+
+[[deps.EHTUVData]]
+deps = ["Conda", "DataFrames", "Dates", "DimensionalData", "EHTUtils", "OrderedCollections", "PyCall", "Statistics", "Unitful", "UnitfulAngles", "UnitfulAstro"]
+git-tree-sha1 = "e322c64e93c8c81f37bc7f898af7b0882b35fb0c"
+uuid = "56783127-7e15-4e7d-9691-d34b50bc826a"
 version = "0.1.0"
 
 [[deps.EHTUtils]]
@@ -703,7 +709,7 @@ version = "1.10.0"
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-version = "1.10.0"
+version = "1.10.1"
 
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
