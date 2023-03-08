@@ -44,7 +44,7 @@ PyPlot = "2"
 Unitful = "1"
 UnitfulAngles = "0.6"
 UnitfulAstro = "1"
-julia = "1.7.3"
+julia = "1.8.5"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
