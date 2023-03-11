@@ -24,10 +24,25 @@ using Pkg
 Pkg.add("EHTImages")
 ```
 
-EHTImages.jl uses [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) for the image visulization, which
-will need to have the Python [Matplotlib](http://matplotlib.org/) library installed on your machine in some way.
-Please see the documentation of [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl).
+EHTImages.jl uses [PyPlot.jl](https://github.com/stevengj/PythonPlot.jl) for the image visulization.
+You can use a custom set of perceptually uniform colormaps implemented in the Python's [ehtplot](https://github.com/liamedeiros/ehtplot) library, which
+has been used in the publications of the EHT Collaboration, by installing it through [CondaPkg.jl](https://github.com/cjdoris/CondaPkg.jl) and 
+import it using [PythonCall.jl](https://github.com/cjdoris/PythonCall.jl).
 
+```julia
+# Install CondaPkg.jl and  PythonCall.jl: (need to run only once in your local/global Julia enviroment)
+using Pkg
+Pkg.add("CondaPkg")
+Pkg.add("PythonCall")
+
+# Install ehtplot (again need to run only once in your local/global Julia enviroment)
+using CondaPkg
+CondaPkg.add_pip("ehtplot", version="@git+https://github.com/liamedeiros/ehtplot")
+
+# When you want to use ehtplot
+using PythonCall
+ehtplot = pyimport("ehtplot")
+```
 
 ## Documentation
 The documentation is in preparation, but docstrings of available functions are listed for the [latest](https://ehtjulia.github.io/EHTImages.jl/dev) version. The stable version has not been released. 
