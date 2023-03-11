@@ -27,6 +27,7 @@ UnitfulAstro = "6112ee07-acf9-5e0f-b108-d242c714bf9f"
 
 [compat]
 DocStringExtensions = "0.9"
+EHTDimensionalData = "0.1"
 EHTModels = "0.1"
 EHTNCDBase = "0.1"
 EHTUVData = "0.1"
