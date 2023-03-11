@@ -3,12 +3,12 @@ module EHTImages
 # Import external packages
 using Base
 using Dates
-using DimensionalData
 using DocStringExtensions # for docstrings
-using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
+using EHTDimensionalData
+using EHTModels
 using EHTNCDBase
 using EHTUVData
-using EHTModels
+using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
 using FITSIO
 using FLoops
@@ -18,7 +18,7 @@ using Missings: disallowmissing # to load netcdf data
 using NCDatasets # to hande netcdf files
 using OrderedCollections # to use OrderedDictionary
 using Parameters # for more flexible definitions of struct
-using PyPlot # to use matplotlib
+import PythonPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
 
 # Include 

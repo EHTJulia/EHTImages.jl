@@ -1,9 +1,8 @@
-export imshow
 export get_imextent
 export plot_colorbar
 export plot_xylabel
 
-function imshow(
+function PythonPlot.imshow(
     image::AbstractEHTImage;
     angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
     fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=K,
@@ -89,7 +88,7 @@ function imshow(
         @throwerror ArgumentError "scale must be :log, :gamma or :linear"
     end
 
-    imsobj = PyPlot.imshow(
+    imsobj = PythonPlot.imshow(
         transpose(imarr),
         origin="lower", extent=imextent,
         vmin=nmin, vmax=nmax, norm=norm,
@@ -100,7 +99,7 @@ function imshow(
     outdict["imshowobj"] = imsobj
 
     if axisoff
-        axis("off")
+        PythonPlot.axis("off")
     elseif axislabel
         output = plot_xylabel(aunit)
         outdict["xlabelobj"] = output[1]
@@ -177,8 +176,8 @@ function plot_xylabel(
     # make the labels and plot them
     xaxis_label = format("Relative RA ({})", unitlabel)
     yaxis_label = format("Relative Dec ({})", unitlabel)
-    xlabobj = xlabel(xaxis_label, labelargs...)
-    ylabobj = ylabel(yaxis_label, labelargs...)
+    xlabobj = PythonPlot.xlabel(xaxis_label, labelargs...)
+    ylabobj = PythonPlot.ylabel(yaxis_label, labelargs...)
     return xlabobj, ylabobj
 end
 
@@ -189,7 +188,7 @@ function plot_colorbar(
 
     label = intensity_label(fluxunit, saunit)
 
-    cbarobj = colorbar(label=label, colorbarargs...)
+    cbarobj = PythonPlot.colorbar(label=label, colorbarargs...)
     return cbarobj
 end
 
