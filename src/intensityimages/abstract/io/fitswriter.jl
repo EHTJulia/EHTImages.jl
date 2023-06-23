@@ -1,20 +1,21 @@
 export save_fits
 export save_fits!
 
+
 """
-    save_fits[!](image::AbstractEHTImage, filename::AbstractString, idx=(1, 1); fitstype::Symbol=:casa)
+    save_fits[!](image::AbstractIntensityImage, filename::AbstractString, idx=(1, 1); fitstype::Symbol=:casa)
 
 Saving the image into a FITS file in a specifed format.
 
 # Arguments
-- `image::AbstractEHTImage`: the input image
+- `image::AbstractIntensityImage`: the input image
 - `filename::AbstractString`: the name of the output FITS file
 - `idx`: the index of the saved image. Should be (frequency index, time index). Default to `(1,1)`.
 
 # Keywords
 - `fitstype::Symbol`: the format type of the output FITS. Availables are `:casa` (CASA compatible).
 """
-function save_fits!(image::AbstractEHTImage, filename::AbstractString, idx=(1, 1); fitstype::Symbol=:casa)
+function save_fits!(image::AbstractIntensityImage, filename::AbstractString, idx=(1, 1); fitstype::Symbol=:casa)
     if fitstype == :casa
         save_fits_casa!(image, filename, idx)
     else
@@ -22,20 +23,25 @@ function save_fits!(image::AbstractEHTImage, filename::AbstractString, idx=(1, 1
     end
 end
 
+
+# quick shortcut
 save_fits = save_fits!
 
-function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=[1, 1])
+
+# saving imagedata in a CASA compatible format
+function save_fits_casa!(image::AbstractIntensityImage, filename::AbstractString, idx=[1, 1])
     # size of the image and corresponding coordinates
     nx, ny, np, _ = size(image)
     fidx, tidx = idx
 
     # Image Metadata
     metadata = image.metadata
+
     #   quick shortcuts
     obsra = rad2deg(metadata[:xref])
     obsdec = rad2deg(metadata[:yref])
-    reffreq = image.freq[fidx]
-    mjd = image.mjd[tidx]
+    reffreq = image.f[fidx]
+    mjd = image.t[tidx]
 
     # Open FITS file in the write mode (allowing to overwrite)
     f = FITS(filename, "w")
@@ -103,7 +109,7 @@ function save_fits_casa!(image::AbstractEHTImage, filename::AbstractString, idx=
     # OBS RA and DEC
     set!(header, "OBSRA", obsra, "Reference RA Coordinates in degree")
     set!(header, "OBSDEC", obsdec, "Reference Dec Coordinates in degree")
-    set!(header, "FREQ", image.freq[fidx], "Reference Frequency in Hz")
+    set!(header, "FREQ", image.f[fidx], "Reference Frequency in Hz")
 
     # OBS DATE
     set!(header, "OBSDATE", Dates.format(mjd2datetime(mjd), "yyyy-mm-dd"),

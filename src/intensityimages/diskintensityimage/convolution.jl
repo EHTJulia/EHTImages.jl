@@ -1,5 +1,5 @@
 function convolve(
-    image::NCImage,
+    image::DiskIntensityImage,
     filename::AbstractString,
     model::AbstractModel;
     mode::Symbol=:create,
@@ -9,18 +9,19 @@ function convolve(
     # create a new file
     newim = save_netcdf(image, filename, mode=mode, group=group)
 
-    # run convolution 
+    # run convolution
     convolve!(newim, model, ex=ex)
 
     return newim
 end
 
+
 function convolve!(
-    image::NCImage,
+    image::DiskIntensityImage,
     model::AbstractModel;
     ex=SequentialEx()
 )
-    # SequentialEx is not available for NCImage
+    # SequentialEx is not available for DiskIntensityImage
     if (ex isa SequentialEx) == false
         @throwerror ArgumentError "NetCDF4 only supports single thread writing. Please use SequentialEx."
     end

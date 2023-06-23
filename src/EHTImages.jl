@@ -21,26 +21,33 @@ using Parameters # for more flexible definitions of struct
 import PythonPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
 
-# Include 
-#   AbstractImage
-include("abstractimage/abstractimage.jl")
-include("abstractimage/convolution.jl")
-include("abstractimage/metadata.jl")
-include("abstractimage/modelmap.jl")
-include("abstractimage/pyplot.jl")
-include("abstractimage/io/fitswriter.jl")
+# Include
+#   DataStorageTypes
+include("datastoragetypes/datastoragetype.jl")
 
-#   NCImage
-include("ncimage/ncimage.jl")
-include("ncimage/convolution.jl")
-include("ncimage/io/const.jl")
-include("ncimage/io/reader.jl")
-include("ncimage/io/writer.jl")
+#   Abstract Image Data Set
+include("imagedatasets/abstract.jl")
 
-#   DDImage
-include("ddimage/ddimage.jl")
-include("ddimage/io/reader.jl")
-include("ddimage/io/writer.jl")
-include("ddimage/io/fitsreader.jl")
+#   Intensity images
+#       Abstract Type
+include("intensityimages/abstract/abstract.jl")
+include("intensityimages/abstract/convolution.jl")
+include("intensityimages/abstract/metadata.jl")
+include("intensityimages/abstract/modelmap.jl")
+include("intensityimages/abstract/plotting_tools.jl")
+include("intensityimages/abstract/pythonplot.jl")
+include("intensityimages/abstract/io/fitswriter.jl")
+
+#       DiskIntensityImage
+include("intensityimages/diskintensityimage/diskintensityimage.jl")
+include("intensityimages/diskintensityimage/io/const.jl")
+include("intensityimages/diskintensityimage/io/reader.jl")
+include("intensityimages/diskintensityimage/io/writer.jl")
+include("intensityimages/diskintensityimage/convolution.jl")
+
+#       IntensityImage
+include("intensityimages/intensityimage/intensityimage.jl")
+include("intensityimages/intensityimage/io/reader.jl")
+include("intensityimages/intensityimage/io/fitsreader.jl")
 
 end

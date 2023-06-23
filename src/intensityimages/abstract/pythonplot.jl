@@ -3,7 +3,7 @@ export plot_colorbar
 export plot_xylabel
 
 function PythonPlot.imshow(
-    image::AbstractEHTImage;
+    image::AbstractIntensityImage;
     angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
     fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=K,
     saunit::Union{String,Unitful.Units,Unitful.Quantity}="pixel",
@@ -114,7 +114,7 @@ function PythonPlot.imshow(
 end
 
 function get_imextent(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     angunit::Union{String,Unitful.Units,Unitful.Quantity,Nothing}=nothing)
 
     # check angular units

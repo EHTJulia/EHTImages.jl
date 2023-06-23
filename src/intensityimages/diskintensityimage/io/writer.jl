@@ -1,10 +1,11 @@
-export create_ncimage
+export create_DiskIntensityImage
 export save_netcdf, save_netcdf!
 
-"""
-    create_ncimage(filename, nx, dx, angunit; keywords) -> NCImage
 
-Create a blank NCImage object. Return NCImage data loaded with :read mode.
+"""
+    $(FUNCTIONNAME)(filename, nx, dx, angunit; keywords) -> DiskIntensityImage
+
+Create a blank `DiskIntensityImage` object. Return `DiskIntensityImage` data loaded with :read mode.
 
 # Arguments
 - `filename::AbstractString`:
@@ -18,11 +19,11 @@ Create a blank NCImage object. Return NCImage data loaded with :read mode.
 
 # Keywords
 - `ny::Real=nx`:
-    the number of pixels along with the vertical axis. Must be positive.  
+    the number of pixels along with the vertical axis. Must be positive.
 - `dy::Real=dx`:
     the pixel size of the vertical axis. Must be positive.
 - `ixref::Real=(nx + 1) / 2`, `iyref::Real=(ny + 1) / 2`:
-    index of the reference pixels along with the horizontal and vertical 
+    index of the reference pixels along with the horizontal and vertical
     axises, respectively. Default values set to the center of the field
     of the view.
 - `pol::Symbol=:single`:
@@ -32,17 +33,17 @@ Create a blank NCImage object. Return NCImage data loaded with :read mode.
     a vector for frequencies in the unit of Hz
 - `mjd::Vector{Float64}=[0.0]`:
     a vector for time in the unit of MJD.
-- `metadata::AbstractDict=default_metadata(NCImage())`:
+- `metadata::AbstractDict=default_metadata(AbstractIntensityImage)`:
     other metadata. Note that the above keywords and arguments will overwrite
     the values of the conflicting keys in this `metadata` argument.
 - `mode::Symbol=:create`:
     The access mode to NCDataset.
     Available modes are `:read`, `:append`, `:create`.
     See help for `EHTNCDBase.ncdmodes` for details.
-- `group::AbstractString=EHTImage.ncd_image_defaultgroup`:
+- `group::AbstractString=EHTImage.ncd_intensity_defaultgroup`:
     The group of the image data in the input NetCDF4 file.
 """
-function create_ncimage(
+function diskintensityimage(
     filename::AbstractString,
     nx::Integer,
     dx::Real,
@@ -54,10 +55,10 @@ function create_ncimage(
     pol::Symbol=:single,
     freq::Vector{Float64}=[1.0],
     mjd::Vector{Float64}=[0.0],
-    metadata::AbstractDict=default_metadata(NCImage()),
+    metadata::AbstractDict=default_metadata(AbstractIntensityImage),
     mode::Symbol=:create,
-    group::AbstractString=ncd_image_defaultgroup
-)::NCImage
+    group::AbstractString=ncd_intensity_defaultgroup
+)::DiskIntensityImage
     # check variables
     for arg in [nx, dx, ny, dy]
         if arg <= 0
@@ -101,7 +102,7 @@ function create_ncimage(
 
     # set metadata
     #   initialize metadata
-    attrib = default_metadata(NCImage())
+    attrib = default_metadata(AbstractIntensityImage)
     #   input metadata in arguments
     for key in keys(metadata)
         attrib[key] = metadata[key]
@@ -117,25 +118,25 @@ function create_ncimage(
     attrib[:nf] = nf
     attrib[:nt] = nt
     #   set metadata
-    set_ncd_image_metadata!(imds, attrib)
+    set_ncd_intensity_metadata!(imds, attrib)
 
     # define dimensions and variables
-    define_ncd_image_dimensions!(imds, nx, ny, np, nf, nt)
-    define_ncd_image_variables!(imds)
+    define_ncd_intensity_dimensions!(imds, nx, ny, np, nf, nt)
+    define_ncd_intensity_variables!(imds)
 
     # initialize variables
     #   image
-    imds[ncd_image_varnames[:image]].var[:] = 0.0
+    imds[ncd_intensity_varnames[:data]].var[:] = 0.0
     #   x and y
     xg, yg = get_xygrid(attrib)
-    imds[ncd_image_varnames[:x]].var[:] = xg[:]
-    imds[ncd_image_varnames[:y]].var[:] = yg[:]
+    imds[ncd_intensity_varnames[:x]].var[:] = xg[:]
+    imds[ncd_intensity_varnames[:y]].var[:] = yg[:]
     #   polarization
-    imds[ncd_image_varnames[:p]].var[:] = ["I", "Q", "U", "V"][1:np]
+    imds[ncd_intensity_varnames[:p]].var[:] = ["I", "Q", "U", "V"][1:np]
     #   frequency
-    imds[ncd_image_varnames[:f]].var[:] = freq[:]
+    imds[ncd_intensity_varnames[:f]].var[:] = freq[:]
     #   time
-    imds[ncd_image_varnames[:t]].var[:] = mjd[:]
+    imds[ncd_intensity_varnames[:t]].var[:] = mjd[:]
 
     # close data set
     NCDatasets.close(dataset)
@@ -146,13 +147,14 @@ function create_ncimage(
     return image
 end
 
+
 """
     save_netcdf!(image, filename; [mode, group])
 
-Save image data to NetCDF4 format. 
+Save image data to NetCDF4 format.
 
 # Arguments
-- `image::AbstractEHTImage`
+- `image::AbstractIntensityImage`
     Input image data
 - `filename::AbstractString`:
     NetCDF4 file where image data will be saved.
@@ -160,14 +162,14 @@ Save image data to NetCDF4 format.
     The access mode to NCDataset.
     Available modes are `:read`, `:append`, `:create`.
     See help for `EHTNCDBase.ncdmodes` for details.
-- `group::AbstractString=EHTImage.ncd_image_defaultgroup`:
+- `group::AbstractString=EHTImage.ncd_intensity_defaultgroup`:
     The group of the image data in the input NetCDF4 file.
 """
 function save_netcdf!(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     filename::AbstractString;
     mode::Symbol=:create,
-    group::AbstractString=ncd_image_defaultgroup
+    group::AbstractString=ncd_intensity_defaultgroup
 )
     # get mode string
     if mode ∉ [:create, :append]
@@ -192,31 +194,31 @@ function save_netcdf!(
     nx, ny, np, nf, nt = size(image)
 
     # define dimensions and variables
-    define_ncd_image_dimensions!(outsubds, nx, ny, np, nf, nt)
-    define_ncd_image_variables!(outsubds)
+    define_ncd_intensity_dimensions!(outsubds, nx, ny, np, nf, nt)
+    define_ncd_intensity_variables!(outsubds)
 
     # set metadata
     #   initialize metadata
-    attrib = default_metadata(NCImage())
-    #   fill metadata 
+    attrib = default_metadata(AbstractIntensityImage)
+    #   fill metadata
     for key in keys(image.metadata)
         skey = Symbol(key)
         attrib[skey] = image.metadata[skey]
     end
     #   write metadata
-    set_ncd_image_metadata!(outsubds, attrib)
+    set_ncd_intensity_metadata!(outsubds, attrib)
 
     # set variables
     #   image
-    outsubds[ncd_image_varnames[:image]].var[:, :, :, :, :] = image.data[:, :, :, :, :]
+    outsubds[ncd_intensity_varnames[:data]].var[:, :, :, :, :] = image.data[:, :, :, :, :]
     #   x and y
     xg, yg = get_xygrid(image)
-    outsubds[ncd_image_varnames[:x]].var[:] = xg[:]
-    outsubds[ncd_image_varnames[:y]].var[:] = yg[:]
+    outsubds[ncd_intensity_varnames[:x]].var[:] = xg[:]
+    outsubds[ncd_intensity_varnames[:y]].var[:] = yg[:]
     #   pol, freq, mjd
-    outsubds[ncd_image_varnames[:p]].var[:] = image.pol[:]
-    outsubds[ncd_image_varnames[:f]].var[:] = image.freq[:]
-    outsubds[ncd_image_varnames[:t]].var[:] = image.mjd[:]
+    outsubds[ncd_intensity_varnames[:p]].var[:] = image.p[:]
+    outsubds[ncd_intensity_varnames[:f]].var[:] = image.f[:]
+    outsubds[ncd_intensity_varnames[:t]].var[:] = image.t[:]
 
     # close data set
     NCDatasets.close(outdataset)
@@ -224,14 +226,15 @@ function save_netcdf!(
     return nothing
 end
 
+
 """
-    save_netcdf(image, filename; [mode=:create, group="image"]) => NCImage
+    save_netcdf(image, filename; [mode=:create, group="image"]) => DiskIntensityImage
 
 Save image data to NetCDF4 format. Saved data will be loaded and returned
 with `:read` access mode.
 
 # Arguments
-- `image::AbstractEHTImage`
+- `image::AbstractIntensityImage`
     Input image data
 - `filename::AbstractString`:
     NetCDF4 file where image data will be saved.
@@ -239,61 +242,63 @@ with `:read` access mode.
     The access mode to NCDataset.
     Available modes are `:read`, `:append`, `:create`.
     See help for `EHTNCDBase.ncdmodes` for details.
-- `group::AbstractString=EHTImage.ncd_image_defaultgroup`:
+- `group::AbstractString=EHTImage.ncd_intensity_defaultgroup`:
     The group of the image data in the input NetCDF4 file.
 """
 function save_netcdf(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     filename::AbstractString;
     mode::Symbol=:create,
-    group::AbstractString=ncd_image_defaultgroup
-)::NCImage
+    group::AbstractString=ncd_intensity_defaultgroup
+)::DiskIntensityImage
     save_netcdf!(image, filename, mode=mode, group=group)
     return load_image(filename, group=group, mode=:read)
 end
 
+
 """
-    define_ncd_image_dimensions!(ncd[, nx, ny, np, nf, nt])
+    define_ncd_intensity_dimensions!(ncd[, nx, ny, np, nf, nt])
 
 Define NetCDF4 dimensions based on the given size of the image data.
 """
-function define_ncd_image_dimensions!(ncd, nx=1, ny=1, np=1, nf=1, nt=1)
+function define_ncd_intensity_dimensions!(ncd, nx=1, ny=1, np=1, nf=1, nt=1)
     # image size
     imsize = (nx, ny, np, nf, nt)
 
     # set dimension
     for i in 1:5
-        @debug i, ncd_image_dimnames[i], imsize[i]
-        defDim(ncd, ncd_image_dimnames[i], imsize[i])
+        @debug i, ncd_intensity_dimnames[i], imsize[i]
+        defDim(ncd, ncd_intensity_dimnames[i], imsize[i])
     end
 
     return nothing
 end
 
 """
-    define_ncd_image_variables!(ncd)
+    define_ncd_intensity_variables!(ncd)
 
 Define NetCDF4 variables based on EHT NetCDF4 Image Format.
 """
-function define_ncd_image_variables!(ncd)
+function define_ncd_intensity_variables!(ncd)
     # define variables
-    for key in keys(ncd_image_varnames)
-        @debug key, ncd_image_varnames[key], ncd_image_vartypes[key], ncd_image_vardims[key]
-        defVar(ncd, ncd_image_varnames[key], ncd_image_vartypes[key], ncd_image_vardims[key])
+    for key in keys(ncd_intensity_varnames)
+        @debug key, ncd_intensity_varnames[key], ncd_intensity_vartypes[key], ncd_intensity_vardims[key]
+        defVar(ncd, ncd_intensity_varnames[key], ncd_intensity_vartypes[key], ncd_intensity_vardims[key])
     end
 
     return nothing
 end
 
+
 """
-    set_ncd_image_metadata!(ncd)
+    set_ncd_intensity_metadata!(ncd)
 
 Set NetCDF4 metadata based on EHT NetCDF4 Image Format.
 """
-function set_ncd_image_metadata!(ncd, metadata)
+function set_ncd_intensity_metadata!(ncd, metadata)
     # shortcut to the format
-    tconv = ncd_image_metadata_typeconv
-    tkeys = keys(ncd_image_metadata_typeconv)
+    tconv = ncd_intensity_metadata_typeconv
+    tkeys = keys(ncd_intensity_metadata_typeconv)
 
     # update metadata
     for key in keys(metadata)

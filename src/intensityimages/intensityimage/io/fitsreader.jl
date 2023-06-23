@@ -1,15 +1,18 @@
 export load_fits
 
 """
-    load_fits(filename::AbstractString, hduid::Integer=1)
+    load_fits(filename::AbstractString, hduid::Integer=1) -> IntensityImage
+    load_fits(fits::FITS, hduid::Integer=1) -> IntensityImage
+    load_fits(hdu::ImageHDU) -> IntensityImage
 
-Load the input FITS image into DDImage (in-memory image data).
+Load the input FITS image into `IntensityImage` (in-memory image data).
 
 # Arguments
 - `filename::AbstractString`: name of the input FITS file
 - `hduid::Integer=1`: ID of the HDU to be loaded. Default to the primary HDU.
+- `hdu::ImageHDU`: HDU to be loaded.
 """
-function load_fits(filename::AbstractString, hduid=1)::DDImage
+function load_fits(filename::AbstractString, hduid::Integer=1)::IntensityImage
     f = FITS(filename, "r")
     hdu = f[hduid]
     image = load_fits(hdu)
@@ -17,30 +20,15 @@ function load_fits(filename::AbstractString, hduid=1)::DDImage
     return image
 end
 
-"""
-    load_fits(filename::FITS, hduid::Integer=1)
-
-Load the input FITS image into DDImage (in-memory image data).
-
-# Arguments
-- `fits::FITS`: the input FITS data
-- `hduid::Integer=1`: ID of the HDU to be loaded. Default to the primary HDU.
-"""
-function load_fits(fits::FITS, hduid=1)::DDImage
+# loader from a FITS object
+function load_fits(fits::FITS, hduid::Integer=1)::IntensityImage
     hdu = fits[hduid]
     image = load_fits(hdu)
     return image
 end
 
-"""
-    load_fits(hdu)
-
-Load the input FITS image into DDImage (in-memory image data).
-
-# Arguments
-- `hdu::ImageHDU`: the input image HDU data
-"""
-function load_fits(hdu::ImageHDU)::DDImage
+# loader from an ImageHDU object
+function load_fits(hdu::ImageHDU)::IntensityImage
     # Check the dimension of the input HDU
     naxis = ndims(hdu)
     if naxis == 2
@@ -78,7 +66,7 @@ function load_fits(hdu::ImageHDU)::DDImage
     end
 
     # load metadata
-    metadata = default_metadata(NCImage())
+    metadata = default_metadata(AbstractIntensityImage)
 
     if "OBJECT" in header_keys
         metadata[:source] = header["OBJECT"]
@@ -205,12 +193,11 @@ function load_fits(hdu::ImageHDU)::DDImage
     metadata[:nf] = nf
     metadata[:nt] = nt
 
-    xg, yg = get_xygrid(metadata)
-    x = Dim{:x}(xg)
-    y = Dim{:y}(yg)
-    p = Dim{:p}(pol)
-    f = Dim{:f}(freq)
-    t = Dim{:t}(mjd)
+    dimx = Dim{:x}(1:nx)
+    dimy = Dim{:y}(1:ny)
+    dimp = Dim{:p}(1:np)
+    dimf = Dim{:f}(1:nf)
+    dimt = Dim{:t}(1:nt)
 
     # Load Image Data
     data = read(hdu)
@@ -219,13 +206,31 @@ function load_fits(hdu::ImageHDU)::DDImage
     end
     data = reshape(data, nx, ny, np, nf, nt)
 
-    dimarray = DimArray(
+    intensity = DimArray(
         data=data,
-        dims=(x, y, p, f, t),
+        dims=(dimx, dimy, dimp, dimf, dimt),
         name=:intensity,
+    )
+    polarization = DimArray(
+        data=pol,
+        dims=(dimp,),
+        name=:polarization
+    )
+    frequency = DimArray(
+        data=freq,
+        dims=(dimf,),
+        name=:frequency
+    )
+    time = DimArray(
+        data=mjd,
+        dims=(dimt,),
+        name=:time
+    )
+    dimstack = DimStack(
+        (intensity, polarization, frequency, time),
         metadata=metadata
     )
 
-    # create a DDImage instance.
-    return create_ddimage(dimarray)
+    # create a IntensityImage instance.
+    return IntensityImage(dimstack)
 end

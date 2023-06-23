@@ -6,18 +6,18 @@ export open!
     open!(image[, mode])
 
 Load image data from NCDataset specified in the input image object
-with the given access mode. If image data are already opened, 
+with the given access mode. If image data are already opened,
 it will close it and reload data again.
 
 # Arguments
-- `image::NCImage`:
+- `image::DiskIntensityImage`:
     The input image object.
 - `mode::Symbol=:read`:
     The access mode to NCDataset.
     Available modes are `:read`, `:append`, `:create`.
     See help for `EHTImage.ncdmodes` for details.
 """
-function open!(image::NCImage, mode::Symbol=:read)
+function open!(image::DiskIntensityImage, mode::Symbol=:read)
     # get mode string
     modestr = ncdmodes[mode]
 
@@ -35,25 +35,25 @@ function open!(image::NCImage, mode::Symbol=:read)
     imds = get_group(image.dataset, groups)
 
     # load arrays
-    image.data = imds[ncd_image_varnames[:image]].var
-    image.mjd = imds[ncd_image_varnames[:t]].var
-    image.freq = imds[ncd_image_varnames[:f]].var
-    image.pol = imds[ncd_image_varnames[:p]].var
+    image.data = imds[ncd_intensity_varnames[:data]].var
     image.metadata = imds.attrib
-
+    image.t = imds[ncd_intensity_varnames[:t]].var
+    image.f = imds[ncd_intensity_varnames[:f]].var
+    image.p = imds[ncd_intensity_varnames[:p]].var
     return nothing
 end
 
-"""
-    load_image(filename; [group, mode]) -> NCImage
 
-Load image data from the specified group in the given NetCDF4 file 
+"""
+    load_image(filename; [group, mode]) -> DiskIntensityImage
+
+Load image data from the specified group in the given NetCDF4 file
 with the specified access mode.
 
 # Arguments
 - `filename::AbstractString`:
     The input NetCDF4 file.
-- `group::AbstractString=EHTImage.ncd_image_defaultgroup`
+- `group::AbstractString=EHTImage.ncd_intensity_defaultgroup`
     The group of the image data in the input NetCDF4 file.
 - `mode::Symbol=:read`:
     The access mode to NCDataset.
@@ -62,16 +62,16 @@ with the specified access mode.
 """
 function load_image(
     filename::AbstractString;
-    group::AbstractString=ncd_image_defaultgroup,
+    group::AbstractString=ncd_intensity_defaultgroup,
     mode::Symbol=:read
-)::NCImage
+)::DiskIntensityImage
     # check modes
     if mode ∉ [:read, :append]
         @throwerror ArgumentError "`mode` should be `:read` or `:append`."
     end
 
     # generate image object
-    image = NCImage(
+    image = DiskIntensityImage(
         filename=filename,
         group=group,
     )
@@ -82,12 +82,13 @@ function load_image(
     return image
 end
 
+
 """
-    close!(image::NCImage)
+    close!(image::DiskIntensityImage)
 
 Close the access to the associated NetCDF4 file.
 """
-function close!(image::NCImage)
+function close!(image::DiskIntensityImage)
     if isopen(image)
         Base.close(image.dataset)
     end
@@ -95,13 +96,14 @@ function close!(image::NCImage)
     return nothing
 end
 
+
 """
-    close(image::NCImage) 
+    close(image::DiskIntensityImage)
 
 Close the access to the associated NetCDF4 file.
 This function is an alias to close!(image).
 """
-function Base.close(image::NCImage)
+function Base.close(image::DiskIntensityImage)
     close!(image)
 
     return nothing

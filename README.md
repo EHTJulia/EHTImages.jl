@@ -54,7 +54,7 @@ imshow(::yourimage, colormap="afmhot_us", ...)
 The documentation is in preparation, but docstrings of available functions are listed for the [latest](https://ehtjulia.github.io/EHTImages.jl/dev) version. The stable version has not been released. 
 
 
-## Acknowledgement
+## Acknowledgements
 The development of this package has been finantially supported by the following programs.
 - [AST-2107681](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2107681), National Science Foundation, USA: v0.1.5 - present
 - [AST-2034306](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2034306), National Science Foundation, USA: v0.1.5 - present

@@ -1,7 +1,8 @@
 export add!
 
+
 function Base.map!(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
@@ -21,8 +22,9 @@ function Base.map!(
     end
 end
 
+
 function add!(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )

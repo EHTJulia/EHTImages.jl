@@ -2,24 +2,24 @@ export convolve, convolve!
 
 
 """
-    $(SIGNATURES) -> AbstractEHTImage
+    $(TYPEDSIGNATURES) -> AbstractIntensityImage
 
 Convolve the input image with a given model, and return
 the convolved image.
 
 # Arguments
-- `image::AbstractEHTImage`: 
+- `image::AbstractIntensityImage`:
    The input image. It must be not disk-based.
 - `model::EHTModels.AbstractModel`:
-   The model to be used as the convolution kernel. 
+   The model to be used as the convolution kernel.
 - `ex=SequentialEx()`
     An executor of FLoops.jl.
 """
 function convolve(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     model::EHTModels.AbstractModel;
     ex=SequentialEx()
-)::AbstractEHTImage
+)::AbstractIntensityImage
     # check if the input is disk-based or not.
     if isdiskdata(image) == IsDiskData()
         @throwerror ArgumentError "Please use `convolve(image, filename, modelname; keywords)` instead."
@@ -36,10 +36,20 @@ end
 
 
 """
-    $(SIGNATURES)
+    $(TYPEDSIGNATURES)
+
+Convolve the input image with a given model.
+
+# Arguments
+- `image::AbstractIntensityImage`:
+   The input image. It must be not disk-based.
+- `model::EHTModels.AbstractModel`:
+   The model to be used as the convolution kernel.
+- `ex=SequentialEx()`
+    An executor of FLoops.jl.
 """
 function convolve!(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )
@@ -54,8 +64,22 @@ function convolve!(
     return nothing
 end
 
+
+"""
+    $(TYPEDSIGNATURES)
+
+Base function for convolving the input image with a given model.
+
+# Arguments
+- `image::AbstractIntensityImage`:
+   The input image. It must be not disk-based.
+- `model::EHTModels.AbstractModel`:
+   The model to be used as the convolution kernel.
+- `ex=SequentialEx()`
+    An executor of FLoops.jl.
+"""
 function convolve_base!(
-    image::AbstractEHTImage,
+    image::AbstractIntensityImage,
     model::EHTModels.AbstractModel;
     ex=SequentialEx()
 )

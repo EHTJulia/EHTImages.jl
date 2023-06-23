@@ -1,13 +1,14 @@
 export default_metadata
 export copy_metadata!
 
+
 """
     ehtimage_metadata_default::NamedTuple
 
-A tuple for the default metadata keys and values for `AbstractEHTImage`.
+A tuple for the default metadata keys and values for `AbstractIntensityImage`.
 """
 const ehtimage_metadata_default = (
-    format="EHT Image NetCDF4 Format",
+    format="EHTJulia Intensity Image NetCDF4 Format",
     version=v"0.1.0",
     source="Nameless Source",
     instrument="Nameless Instrument",
@@ -33,8 +34,8 @@ const ehtimage_metadata_default = (
     fluxunit="Jy/Pixel",
     pulsetype="delta",
 )
-
 int(x) = round(Int64, x)
+
 
 """
     ehtimage_metadata_default::NamedTuple
@@ -69,6 +70,7 @@ const ehtimage_metadata_type = (
     pulsetype=string,
 )
 
+
 """
     ehtimage_metadata_compat::NamedTuple
 
@@ -87,12 +89,13 @@ const ehtimage_metadata_compat = (
     pulsetype=["delta", "rectangle"],
 )
 
+
 """
     default_metadata(dataset) -> OrderedDict
 
 Return the default metadata of the given dataset.
 """
-function default_metadata(::AbstractEHTImage)
+function default_metadata(::Type{<:AbstractIntensityImage})
     dict = OrderedDict{Symbol,Any}()
 
     for key in keys(ehtimage_metadata_default)
@@ -101,6 +104,7 @@ function default_metadata(::AbstractEHTImage)
 
     return dict
 end
+
 
 """
     get_xygrid --> Tuple{StepRangeLen, StepRangeLen}
@@ -142,6 +146,7 @@ function get_xygrid(
     return (xg, yg)
 end
 
+
 """
     get_uvgrid(metadata, dofftshift=true)
 
@@ -167,12 +172,13 @@ function get_uvgrid(metadata, dofftshift::Bool=true)
     return (ug, vg)
 end
 
+
 """
-    copy_metadata!(image::AbstractEHTImage, uvdataset::AbstractUVDataSet)
+    copy_metadata!(image::AbstractIntensityImage, uvdataset::AbstractUVDataSet)
 
 copy metadata from the given uvdataset.
 """
-function copy_metadata!(image::AbstractEHTImage, uvdataset::EHTUVData.AbstractUVDataSet)
+function copy_metadata!(image::AbstractIntensityImage, uvdataset::EHTUVData.AbstractUVDataSet)
     for key in [:source, :instrument, :observer, :coordsys, :equinox]
         image.metadata[key] = uvdataset.metadata[key]
     end
