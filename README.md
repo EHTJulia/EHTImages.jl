@@ -18,6 +18,8 @@ The package currently implements:
 - Provides interactive plotting tools powered by [PythonPlot.jl](https://github.com/JuliaPy/PythonPlot.jl).
 - Offers interactive tools to analyze, edit, and transform images using pure Julia native functions.
 
+
+## Installation
 Assuming that you already have Julia correctly installed, it suffices to import EHTImages.jl in the standard way:
 
 ```julia
