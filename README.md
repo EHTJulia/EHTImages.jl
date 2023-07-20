@@ -3,21 +3,22 @@
 [![Build Status](https://github.com/EHTJulia/EHTImages.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/EHTJulia/EHTImages.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/EHTJulia/EHTImages.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/EHTJulia/EHTImages.jl)
 
-This module defines data types and implement basic functions to handle five dimensional astronomical images for radio interferometry.
-The module aims to provide the following features meeting the needs for multi-dimensional imaging in particular for Very Long Baseline Inferferometry (e.g. Event Horizon Telescope) and millimeter interferometry (e.g. ALMA).
-- Native support of the five dimensional images (x, y, frequency, polarizaition, time) in a self-descriptive data format.
-    + Non equispaced grid in time for the application of dynamic imaging methods (e.g. Johnson et al. 2017, Bouman et al. 2017)
-    + Non equispaced grid in frequency for the application of multi-frequency imaging methods (e.g. Chael et al. 2023)
-- Interactive plotting tools powered by PyPlot.jl and Makie.jl
-- Interactive tools to analyze, edit, and transform images through pure Julia native functions
-- Supporting multiple data format for loading and writing
-    + FITS/HDF5 formats of eht-imaging library (Chael et al. 2016, 2018) and SMILI (Akiyama et al. 2017a, b) for the EHT community.
-    + FITS formats of AIPS, DIFMAP and CASA software packages
-    + Native data format in NETCDF4 (on HDF5)
+This module provides data types and implements basic functions to handle five-dimensional astronomical images for radio interferometry. The module aims to provide the following features, meeting the needs for multi-dimensional high-resolution imaging, particularly for Very Long Baseline Interferometry (e.g., Event Horizon Telescope) and millimeter interferometry (e.g., ALMA) in the regime of narrow field of views.
 
-## Installation
-Assuming that you already have Julia correctly installed, it suffices to import EHTImages.jl in the standard 
-way:
+The package currently implements:
+
+- Provides abstract types and methods to handle both in-memory and disk-based image cubes.
+- Offers native support for five-dimensional images (x, y, frequency, polarization, time) in a self-descriptive data format.
+  - Supports non-equidistant grid in time for the application of dynamic imaging methods (e.g., Johnson et al., 2017, Bouman et al., 2017).
+  - Supports non-equidistant grid in frequency for the application of multi-frequency imaging methods (e.g., Chael et al., 2023).
+  - Supports both in-memory and disk-based (lazily-loaded) image files.
+    - In-memory data is stored in a self-descriptive data type powered by [EHTDimensionalData.jl](https://github.com/EHTJulia/EHTDimensionalData.jl) (an extension of the powerful [DimensionalData.jl](https://github.com/rafaqz/DimensionalData.jl)).
+    - Disk-based data is based on NetCDF (on HDF5) accessed by [NCDatasets.jl](https://github.com/Alexander-Barth/NCDatasets.jl), allowing lazy access to data suitable for a large image cube that may not fit into memory and also for containing multiple image data sets inside a single file.
+  - Includes a FITS writer and loader compatible with the eht-imaging library (Chael et al., 2016, 2018) and SMILI (Akiyama et al., 2017a, b) for the EHT community, as well as with more traditional packages including AIPS, DIFMAP, and CASA software packages.
+- Provides interactive plotting tools powered by [PythonPlot.jl](https://github.com/JuliaPy/PythonPlot.jl).
+- Offers interactive tools to analyze, edit, and transform images using pure Julia native functions.
+
+Assuming that you already have Julia correctly installed, it suffices to import EHTImages.jl in the standard way:
 
 ```julia
 using Pkg
@@ -39,19 +40,23 @@ Pkg.add("PythonCall")
 using CondaPkg
 CondaPkg.add_pip("ehtplot", version="@git+https://github.com/liamedeiros/ehtplot")
 ```
-Then, you can use ehtplot for, for instance, `imshow` method for the image plotting.
+After installing ehtplot, you can import and utilize it for image visualization in EHTImages.jl. For example:
 ```julia
 # When you want to use ehtplot
 using EHTImages
-using PythonCall # provide the `pyimport` function
+using PythonCall  # provides the `pyimport` function
 ehtplot = pyimport("ehtplot")
 
-# plot using the `afmhot_us` colormap in ehtplot.
+# Plot using the `afmhot_us` colormap in ehtplot.
 imshow(::yourimage, colormap="afmhot_us", ...)
 ```
 
 ## Documentation
 The documentation is in preparation, but docstrings of available functions are listed for the [latest](https://ehtjulia.github.io/EHTImages.jl/dev) version. The stable version has not been released. 
+
+
+## What if you don't find a feature you want? 
+We are prioritizing to implement features needed for the image analysis conducted in the EHT and ngEHT Collaborations. Nevertheless, your feedback is really helpful to make the package widely useful for the broad community. Please request a feature in the [GitHub's issue page](https://github.com/EHTJulia/EHTImages.jl/issues).
 
 
 ## Acknowledgements

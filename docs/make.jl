@@ -5,7 +5,7 @@ DocMeta.setdocmeta!(EHTImages, :DocTestSetup, :(using EHTImages); recursive=true
 
 makedocs(;
     modules=[EHTImages],
-    authors="Kazu Akiyama",
+    authors="Kazunori Akiyama",
     repo="https://github.com/EHTJulia/EHTImages.jl/blob/{commit}{path}#{line}",
     sitename="EHTImages.jl",
     format=Documenter.HTML(;
@@ -16,6 +16,7 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "All Docstrings" => "autodocstrings.md",
     ]
 )
 
