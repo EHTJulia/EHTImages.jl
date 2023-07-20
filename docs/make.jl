@@ -16,6 +16,7 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Intensity Images" => "intensityimage.md",
         "All Docstrings" => "autodocstrings.md",
     ]
 )
