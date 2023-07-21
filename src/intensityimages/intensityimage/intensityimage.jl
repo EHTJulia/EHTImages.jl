@@ -1,4 +1,5 @@
 export IntensityImage
+export intensityimage
 
 
 """
