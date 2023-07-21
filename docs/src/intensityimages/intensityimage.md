@@ -90,18 +90,7 @@ Dict{Any, Any} with 4 entries:
 
 As you can see [`imshow`](@ref) will return all python objects in the generated plot so that users can further customize each component.
 
-You can utilize a custom set of perceptually uniform colormaps implemented in the Python library [ehtplot](https://github.com/liamedeiros/ehtplot), which has been utilized in publications by the EHT Collaboration. To use these colormaps, follow the steps below to install ehtplot via [CondaPkg.jl](https://github.com/cjdoris/CondaPkg.jl) and import it using [PythonCall.jl](https://github.com/cjdoris/PythonCall.jl).
-```julia
-# Install CondaPkg.jl and PythonCall.jl (only needs to be executed once in your local/global Julia environment)
-using Pkg
-Pkg.add("CondaPkg")
-Pkg.add("PythonCall")
-
-# Install ehtplot (also only needs to be executed once in your local/global Julia environment)
-using CondaPkg
-CondaPkg.add_pip("ehtplot", version="@git+https://github.com/liamedeiros/ehtplot")
-```
-After installing ehtplot, you can import and utilize it for image visualization. For example:
+You can utilize a custom set of perceptually uniform colormaps implemented in the Python library [ehtplot](https://github.com/liamedeiros/ehtplot), which has been utilized in publications by the EHT Collaboration. After installing ehtplot via [CondaPkg.jl](https://github.com/cjdoris/CondaPkg.jl) (see the Installation section of the documentation), you can import and utilize it for image visualization using [PythonCall.jl](https://github.com/cjdoris/PythonCall.jl). For example:
 ```julia
 using PythonCall  # provides the `pyimport` function
 ehtplot = pyimport("ehtplot")
@@ -143,8 +132,8 @@ save_fits!(image, './foobar.fits')
 ```
 
 ## Create a brank new image
-You can create a blank 5D image directy with the [`intensitymap`](@ref) function. 
+You can create a blank 5D image directy with the [`intensityimage`](@ref) function. 
 ```@example
 im = intensityimage(200, 1.0, μas)
 ```
-You can specify also time, frequency, number of polarizations and all other metadata as well. Please see the docstring of [`intensitymap`](@ref) here.
+You can specify also time, frequency, number of polarizations and all other metadata as well. Please see the docstring of [`intensityimage`](@ref) here.
