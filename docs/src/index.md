@@ -28,7 +28,6 @@ using Pkg
 Pkg.add("EHTImages")
 ```
 EHTImages.jl relies on [PythonPlot.jl](https://github.com/stevengj/PythonPlot.jl) for image visualization. You can utilize a custom set of perceptually uniform colormaps implemented in the Python library [ehtplot](https://github.com/liamedeiros/ehtplot), which has been utilized in publications by the EHT Collaboration. To use these colormaps, follow the steps below to install ehtplot via [CondaPkg.jl](https://github.com/cjdoris/CondaPkg.jl) and import it using [PythonCall.jl](https://github.com/cjdoris/PythonCall.jl):
-
 ```julia
 # Install CondaPkg.jl and PythonCall.jl (only needs to be executed once in your local/global Julia environment)
 using Pkg
@@ -38,16 +37,6 @@ Pkg.add("PythonCall")
 # Install ehtplot (also only needs to be executed once in your local/global Julia environment)
 using CondaPkg
 CondaPkg.add_pip("ehtplot", version="@git+https://github.com/liamedeiros/ehtplot")
-```
-After installing ehtplot, you can import and utilize it for image visualization in EHTImages.jl. For example:
-```julia
-# When you want to use ehtplot
-using EHTImages
-using PythonCall  # provides the `pyimport` function
-ehtplot = pyimport("ehtplot")
-
-# Plot using the `afmhot_us` colormap in ehtplot.
-imshow(::yourimage, colormap="afmhot_us", ...)
 ```
 
 
