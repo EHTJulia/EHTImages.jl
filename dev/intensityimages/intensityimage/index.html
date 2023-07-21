@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>In-memory Intensity Images · EHTImages.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://EHTJulia.github.io/EHTImages.jl/intensityimages/intensityimage/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">EHTImages.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Intensity Images</span><ul><li><a class="tocitem" href="../abstractintensityimage/">Intensity Image Data Types</a></li><li class="is-active"><a class="tocitem" href>In-memory Intensity Images</a><ul class="internal"><li><a class="tocitem" href="#Loading-an-Image-FITS-file"><span>Loading an Image FITS file</span></a></li><li><a class="tocitem" href="#Accessing-to-and-editing-data"><span>Accessing to and editing data</span></a></li><li><a class="tocitem" href="#Plotting-Images"><span>Plotting Images</span></a></li><li><a class="tocitem" href="#Saving-into-a-FITS-file"><span>Saving into a FITS file</span></a></li></ul></li></ul></li><li><a class="tocitem" href="../../autodocstrings/">All Docstrings</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Intensity Images</a></li><li class="is-active"><a href>In-memory Intensity Images</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>In-memory Intensity Images</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/EHTJulia/EHTImages.jl/blob/main/docs/src/intensityimages/intensityimage.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="In-memory-Intensity-Images"><a class="docs-heading-anchor" href="#In-memory-Intensity-Images">In-memory Intensity Images</a><a id="In-memory-Intensity-Images-1"></a><a class="docs-heading-anchor-permalink" href="#In-memory-Intensity-Images" title="Permalink"></a></h1><p><a href="../../autodocstrings/#EHTImages.IntensityImage"><code>IntensityImage</code></a> provides an in-memory implementation of the 5D intensity image. Internally, it uses a self-descriptive data set using the <code>DimStack</code> type o <a href="https://github.com/EHTJulia/EHTDimensionalData.jl">EHTDimensionalData.jl</a>, which is an extension of the powerful <a href="https://github.com/rafaqz/DimensionalData.jl">DimensionalData.jl</a>. Unless you use a huge number of images that will not fit within the memory of your computer, this will likely be the data type you will work with using this package.</p><h2 id="Loading-an-Image-FITS-file"><a class="docs-heading-anchor" href="#Loading-an-Image-FITS-file">Loading an Image FITS file</a><a id="Loading-an-Image-FITS-file-1"></a><a class="docs-heading-anchor-permalink" href="#Loading-an-Image-FITS-file" title="Permalink"></a></h2><p>Here we will use a FITS image created by python&#39;s <a href="https://github.com/achael/multifrequency_scripts/blob/main/sec_4.2/images_M87_Chael/M87_230GHz_Chael.fits">eht-imaging library</a> used in <a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...945...40C/abstract">Chael et al. 2023</a>. Let&#39;s download data first.</p><pre><code class="language-julia hljs">using Downloads: download
+
+# Download a FITS image
+fitsname = download(&quot;https://github.com/achael/multifrequency_scripts/raw/main/sec_4.2/images_M87_Chael/M87_230GHz_Chael.fits&quot;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;/tmp/jl_m5ohEXOHqD&quot;</code></pre><p>FITS file can be loaded into an <a href="../../autodocstrings/#EHTImages.IntensityImage"><code>IntensityImage</code></a> instance by <a href="../../autodocstrings/#EHTImages.load_fits"><code>load_fits</code></a> method. This method uses <a href="https://github.com/JuliaAstro/FITSIO.jl">FITSIO.jl</a> and you can directly load data also from an instance of <code>FITS</code> data type in <a href="https://github.com/JuliaAstro/FITSIO.jl">FITSIO.jl</a>.</p><pre><code class="language-julia hljs">using EHTImages
+
+# Load the FITS image into IntensityImage
+image = load_fits(fitsname)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">DimStack with dimensions: 
+  Dim{:x} Sampled{Int64} 1:512 ForwardOrdered Regular Points,
+  Dim{:y} Sampled{Int64} 1:512 ForwardOrdered Regular Points,
+  Dim{:p} Sampled{Int64} 1:1 ForwardOrdered Regular Points,
+  Dim{:f} Sampled{Int64} 1:1 ForwardOrdered Regular Points,
+  Dim{:t} Sampled{Int64} 1:1 ForwardOrdered Regular Points
+and 4 layers:
+  :intensity    Float64 dims: Dim{:x}, Dim{:y}, Dim{:p}, Dim{:f}, Dim{:t} (512×512×1×1×1)
+  :polarization String dims: Dim{:p} (1)
+  :frequency    Float64 dims: Dim{:f} (1)
+  :time         Float64 dims: Dim{:t} (1)
+
+with metadata OrderedCollections.OrderedDict{Symbol, Any} with 25 entries:
+  :format     =&gt; &quot;EHTJulia Intensity Image NetCDF4 Format&quot;
+  :version    =&gt; v&quot;0.1.0&quot;
+  :source     =&gt; &quot;M87&quot;
+  :instrument =&gt; &quot;VLBI&quot;
+  :observer   =&gt; &quot;Nameless Observer&quot;
+  :coordsys   =&gt; &quot;icrs&quot;
+  :equinox    =&gt; -1
+  :nx         =&gt; 512
+  :dx         =&gt; 9.69613e-12
+  :xref       =&gt; 3.27609
+  :ixref      =&gt; 256.5
+  :xunit      =&gt; &quot;rad&quot;
+  :ny         =&gt; 512
+  :dy         =&gt; 9.69613e-12
+  :yref       =&gt; 0.216266
+  :iyref      =&gt; 256.5
+  :yunit      =&gt; &quot;rad&quot;
+  :np         =&gt; 1
+  :polrep     =&gt; &quot;stokes&quot;
+  ⋮           =&gt; ⋮</code></pre><p>All of the loaded intensity image including its metadata is loaded into the field <code>image.dimstack::EHTDimensionalData.DimStack</code>.</p><pre><code class="language-julia hljs">image.dimstack # will give an access to the dimstack instance storing all image data.</code></pre><p><a href="../../autodocstrings/#EHTImages.IntensityImage"><code>IntensityImage</code></a> is <em>immutable</em>, so users can not change the <code>DimStack</code> object associated with an <a href="../../autodocstrings/#EHTImages.IntensityImage"><code>IntensityImage</code></a> instance to something else. However, arrays and metadata stored in the <code>DimStack</code> object is <em>mutable</em>. This allows users to flexibly edit data inside.</p><h2 id="Accessing-to-and-editing-data"><a class="docs-heading-anchor" href="#Accessing-to-and-editing-data">Accessing to and editing data</a><a id="Accessing-to-and-editing-data-1"></a><a class="docs-heading-anchor-permalink" href="#Accessing-to-and-editing-data" title="Permalink"></a></h2><p>You can access to the raw array of the intensity image in dimension of (x, y, polarization, fequency, time) by</p><pre><code class="language-julia hljs">image.data # return an array of intensity in the unit of Jy/pixel</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">512×512×1×1×1 Array{Float64, 5}:
+[:, :, 1, 1, 1] =
+ 1.49088e-20  1.91487e-20  2.43507e-20  …  8.52323e-17  7.10324e-17
+ 1.34429e-20  1.72043e-20  2.19191e-20     8.57605e-17  7.12822e-17
+ 1.20246e-20  1.54021e-20  1.97089e-20     8.5778e-17   7.14971e-17
+ 1.0701e-20   1.37861e-20  1.75985e-20     8.56193e-17  7.13338e-17
+ 9.51977e-21  1.22547e-20  1.57236e-20     8.50098e-17  7.09268e-17
+ 8.42439e-21  1.08803e-20  1.39877e-20  …  8.41273e-17  7.02246e-17
+ 7.43966e-21  9.63265e-21  1.23898e-20     8.31614e-17  6.91728e-17
+ 6.54987e-21  8.49386e-21  1.09644e-20     8.1161e-17   6.8036e-17
+ 5.74401e-21  7.48689e-21  9.66075e-21     7.91269e-17  6.62064e-17
+ 5.03973e-21  6.5659e-21   8.51665e-21     7.62283e-17  6.43447e-17
+ ⋮                                      ⋱  ⋮            
+ 4.22026e-8   4.41303e-8   4.60761e-8      3.64781e-10  3.51191e-10
+ 4.30982e-8   4.50123e-8   4.69385e-8      3.58739e-10  3.46048e-10
+ 4.39581e-8   4.58619e-8   4.7768e-8    …  3.51929e-10  3.39918e-10
+ 4.47899e-8   4.6666e-8    4.85571e-8      3.441e-10    3.333e-10
+ 4.55679e-8   4.74378e-8   4.92987e-8      3.35825e-10  3.25714e-10
+ 4.63103e-8   4.81514e-8   4.99992e-8      3.2667e-10   3.17749e-10
+ 4.69845e-8   4.88218e-8   5.06397e-8      3.17083e-10  3.09111e-10
+ 4.76138e-8   4.94163e-8   5.12252e-8   …  3.0704e-10   2.99919e-10
+ 4.81937e-8   4.99617e-8   5.17323e-8      2.9642e-10   2.9025e-10</code></pre><p>You can access to the label or coordinates of each axis by</p><pre><code class="language-julia hljs">image.p # return an array of polarization labels in string</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">1-element Vector{String}:
+ &quot;I&quot;</code></pre><pre><code class="language-julia hljs">image.t # return an array of time in MJD</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">1-element Vector{Float64}:
+ 62750.68305555556</code></pre><pre><code class="language-julia hljs">image.f # return an array of frequencies in Hz</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">1-element Vector{Float64}:
+ 2.3e11</code></pre><p>Now you can see that this is a single frequency, single-stokes, and single-epoch FITS image with 512 x 512 pixels. For the spatial extent, there is a dedicated method <a href="../../autodocstrings/#EHTImages.get_xygrid"><code>get_xygrid(::AbstractIntensityImage)</code></a>. In default, it returns series of the central coordinates in rad</p><pre><code class="language-julia hljs">xygrid = get_xygrid(image)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(2.4773618721862773e-9:-9.696132572157641e-12:-2.4773618721862773e-9, -2.477361872186318e-9:9.6961325721578e-12:2.477361872186318e-9)</code></pre><p>or you can specify a unit in an mutliple way.</p><pre><code class="language-julia hljs"># use string
+xygrid = get_xygrid(image, &quot;μas&quot;)
+
+# use Unitful
+using Unitful
+using UnitfulAngles
+xygrid = get_xygrid(image, u&quot;μas&quot;)
+
+# use preload units in EHTUtils
+using EHTUtils # preload units
+xygrid = get_xygrid(image, μas)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(510.99256657044646:-1.9999709063422562:-510.99256657044646, -510.9925665704548:1.9999709063422888:510.9925665704548)</code></pre><p>Now you see that this image has a field of view of 1022 μas in each axes. If you need to sample a vector from each you can simply use <code>collect(xygrid[1])</code>.</p><p>Metadata are stored in <code>OrderedDict</code>. You can access to metadata from the <code>metadata</code> field.</p><pre><code class="language-julia hljs">image.metadata # access to metadata</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">OrderedCollections.OrderedDict{Symbol, Any} with 25 entries:
+  :format     =&gt; &quot;EHTJulia Intensity Image NetCDF4 Format&quot;
+  :version    =&gt; v&quot;0.1.0&quot;
+  :source     =&gt; &quot;M87&quot;
+  :instrument =&gt; &quot;VLBI&quot;
+  :observer   =&gt; &quot;Nameless Observer&quot;
+  :coordsys   =&gt; &quot;icrs&quot;
+  :equinox    =&gt; -1
+  :nx         =&gt; 512
+  :dx         =&gt; 9.69613e-12
+  :xref       =&gt; 3.27609
+  :ixref      =&gt; 256.5
+  :xunit      =&gt; &quot;rad&quot;
+  :ny         =&gt; 512
+  :dy         =&gt; 9.69613e-12
+  :yref       =&gt; 0.216266
+  :iyref      =&gt; 256.5
+  :yunit      =&gt; &quot;rad&quot;
+  :np         =&gt; 1
+  :polrep     =&gt; &quot;stokes&quot;
+  ⋮           =&gt; ⋮</code></pre><p>As noted eariler, arrays and metadata stored in <a href="../../autodocstrings/#EHTImages.IntensityImage"><code>IntensityImage</code></a> instances are <em>mutable</em>. This allows users to flexibly edit data inside.</p><pre><code class="language-julia hljs">image.metadata[:observer] = &quot;Wonderful Astronomer&quot; # edit metadata
+image.metadata</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">OrderedCollections.OrderedDict{Symbol, Any} with 25 entries:
+  :format     =&gt; &quot;EHTJulia Intensity Image NetCDF4 Format&quot;
+  :version    =&gt; v&quot;0.1.0&quot;
+  :source     =&gt; &quot;M87&quot;
+  :instrument =&gt; &quot;VLBI&quot;
+  :observer   =&gt; &quot;Wonderful Astronomer&quot;
+  :coordsys   =&gt; &quot;icrs&quot;
+  :equinox    =&gt; -1
+  :nx         =&gt; 512
+  :dx         =&gt; 9.69613e-12
+  :xref       =&gt; 3.27609
+  :ixref      =&gt; 256.5
+  :xunit      =&gt; &quot;rad&quot;
+  :ny         =&gt; 512
+  :dy         =&gt; 9.69613e-12
+  :yref       =&gt; 0.216266
+  :iyref      =&gt; 256.5
+  :yunit      =&gt; &quot;rad&quot;
+  :np         =&gt; 1
+  :polrep     =&gt; &quot;stokes&quot;
+  ⋮           =&gt; ⋮</code></pre><h2 id="Plotting-Images"><a class="docs-heading-anchor" href="#Plotting-Images">Plotting Images</a><a id="Plotting-Images-1"></a><a class="docs-heading-anchor-permalink" href="#Plotting-Images" title="Permalink"></a></h2><h3 id="Intensity-map"><a class="docs-heading-anchor" href="#Intensity-map">Intensity map</a><a id="Intensity-map-1"></a><a class="docs-heading-anchor-permalink" href="#Intensity-map" title="Permalink"></a></h3><p>The package currently relies on <a href="https://github.com/stevengj/PythonPlot.jl">PythonPlot.jl</a> for image visualization. It has a customized <code>imshow(::AbstractIntensityImage)</code> method for <a href="../../autodocstrings/#EHTImages.AbstractIntensityImage"><code>AbstractIntensityImage</code></a> type.</p><pre><code class="language-julia hljs">using EHTUtils # for shortcuts to flux and angular units
+using PythonPlot
+
+f = figure()
+ax = gca()
+imshow(image, fluxunit=1e9K, angunit=μas, scale=:linear, cmap=&quot;viridis&quot;)</code></pre><pre><code class="nohighlight hljs">Dict{Any, Any} with 4 entries:
+  &quot;ylabelobj&quot;   =&gt; &lt;py Text(0, 0.5, &#39;Relative Dec (μas)&#39;)&gt;
+  &quot;xlabelobj&quot;   =&gt; &lt;py Text(0.5, 0, &#39;Relative RA (μas)&#39;)&gt;
+  &quot;colorbarobj&quot; =&gt; &lt;py matplotlib.colorbar.Colorbar object at 0x1803c3090&gt;
+  &quot;imshowobj&quot;   =&gt; &lt;py matplotlib.image.AxesImage object at 0x180c20f10&gt;</code></pre><p><img src="../img/intensityimage_plot1.png" alt="imshow&#39;s output"/></p><p>As you can see <code>imshow</code> will return all python objects in the generated plot so that users can further customize each component.</p><p>You can utilize a custom set of perceptually uniform colormaps implemented in the Python library <a href="https://github.com/liamedeiros/ehtplot">ehtplot</a>, which has been utilized in publications by the EHT Collaboration. To use these colormaps, follow the steps below to install ehtplot via <a href="https://github.com/cjdoris/CondaPkg.jl">CondaPkg.jl</a> and import it using <a href="https://github.com/cjdoris/PythonCall.jl">PythonCall.jl</a>.</p><pre><code class="language-julia hljs"># Install CondaPkg.jl and PythonCall.jl (only needs to be executed once in your local/global Julia environment)
+using Pkg
+Pkg.add(&quot;CondaPkg&quot;)
+Pkg.add(&quot;PythonCall&quot;)
+
+# Install ehtplot (also only needs to be executed once in your local/global Julia environment)
+using CondaPkg
+CondaPkg.add_pip(&quot;ehtplot&quot;, version=&quot;@git+https://github.com/liamedeiros/ehtplot&quot;)</code></pre><p>After installing ehtplot, you can import and utilize it for image visualization. For example:</p><pre><code class="language-julia hljs">using PythonCall  # provides the `pyimport` function
+ehtplot = pyimport(&quot;ehtplot&quot;)
+
+f = figure()
+ax = gca()
+# use &quot;afmhot_us&quot; colormap in ehtplot, a standard colormap used in the EHT Collaboration
+imshow(image, fluxunit=1e9K, angunit=μas, scale=:linear, cmap=&quot;afmhot_us&quot;)
+xlim(200, -200)
+ylim(-200, 200)</code></pre><p><img src="../img/intensityimage_plot2.png" alt="imshow&#39;s output"/></p><p>You can also change a scale. <code>imshow</code> method has three options (<code>:linear</code>, <code>:log</code>, and <code>:gamma</code>). The dynamic range of <code>:log</code> scale contour can be controlled by <code>dyrange</code>.</p><pre><code class="language-julia hljs">f = figure()
+ax = gca()
+imshow(image, fluxunit=1e9K, angunit=μas, scale=:log, dyrange=1000, cmap=&quot;gnuplot2_us&quot;)</code></pre><p><img src="../img/intensityimage_plot3.png" alt="imshow&#39;s output"/></p><p>For gamma scale, the power low can be controled by <code>gamma</code>:</p><pre><code class="language-julia hljs">f = figure()
+ax = gca()
+imshow(image, fluxunit=1e9K, angunit=μas, scale=:gamma, gamma=0.5, cmap=&quot;cubehelix_u&quot;)</code></pre><p><img src="../img/intensityimage_plot4.png" alt="imshow&#39;s output"/></p><h3 id="Toolkit-for-manually-plotting-data"><a class="docs-heading-anchor" href="#Toolkit-for-manually-plotting-data">Toolkit for manually plotting data</a><a id="Toolkit-for-manually-plotting-data-1"></a><a class="docs-heading-anchor-permalink" href="#Toolkit-for-manually-plotting-data" title="Permalink"></a></h3><p>Sometimes, users might want to make a custom function to plot images. There are some useful set of methods to assist it. Also the source code for <code>imshow(::AbstractIntensityImage)</code> method would be helpful to learn using PythonPlot for a custom plotting.</p><ul><li><code>get_imextent</code> method –- this method will return the extent of the image in the specified unit for the <code>PythonPlot.imshow</code>&#39;s <code>extent</code> argument. Users can plot images with the actual angular scales with <code>imshow(array, origin=&quot;lower&quot;, extent=imextent)</code>.</li><li><a href="../../autodocstrings/#EHTImages.get_bconv-Tuple{AbstractIntensityImage}"><code>get_bconv</code></a> method –- derive a conversion factor from Jy/Pixel (the unit for the <code>data</code> field) to an arbitrary unit of the intensity.</li></ul><h2 id="Saving-into-a-FITS-file"><a class="docs-heading-anchor" href="#Saving-into-a-FITS-file">Saving into a FITS file</a><a id="Saving-into-a-FITS-file-1"></a><a class="docs-heading-anchor-permalink" href="#Saving-into-a-FITS-file" title="Permalink"></a></h2><p>You can use save a 3D cube of a sliced image by <a href="../../autodocstrings/#EHTImages.save_fits!"><code>save_fits!</code></a><code>(::AbstractIntensityImage, filename::AbstractString, idx=(1,1))</code> method. The idx here is for (time, frequency) as popular image FITS formats do not support non-equispaced grids for time and frequency. The exported FITS is compatible with CASA, AIPS, DIFMAP and also other eht imaging packages (eht-imaging and SMILI)</p><pre><code class="language-julia hljs">save_fits!(image, &#39;./foobar.fits&#39;)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../abstractintensityimage/">« Intensity Image Data Types</a><a class="docs-footer-nextpage" href="../../autodocstrings/">All Docstrings »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 21 July 2023 04:03">Friday 21 July 2023</span>. Using Julia version 1.9.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
