@@ -1,4 +1,6 @@
 export AbstractIntensityImage
+export get_xygrid
+export get_uvgrid
 
 """
     $(TYPEDEF)
@@ -17,3 +19,31 @@ See also documentations for `AbstractImageDataSet`.
 """
 abstract type AbstractIntensityImage <: AbstractImageDataSet end
 
+
+"""
+    get_xygrid(::AbstractIntensityImage, angunit) --> Tuple{StepRangeLen, StepRangeLen}
+    get_xygrid(metadata, angunit) --> Tuple{StepRangeLen, StepRangeLen}
+
+Returning 1-dimensional StepRangeLen objects for the grids along with x and y axis
+in the given angular unit specified by angunit. The input could be a intensity image data set or
+its metadata.
+
+# Arguments
+- `angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad`: Angular units of the output pixel grids.
+"""
+function get_xygrid(
+    image::AbstractIntensityImage,
+    angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
+    return get_xygrid(image.metadata, angunit)
+end
+
+
+"""
+    get_uvgrid(image::AbstractIntensityImage, dofftshift=true)
+    get_uvgrid(metadata, dofftshift::Bool=true)
+
+returning u and v grids corresponding to the image field of view and pixel size.
+"""
+function get_uvgrid(image::AbstractIntensityImage, dofftshift::Bool=true)
+    return get_uvgrid(image.metadata, dofftshift)
+end

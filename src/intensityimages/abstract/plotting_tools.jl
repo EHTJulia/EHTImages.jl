@@ -1,9 +1,9 @@
 export get_bconv
-export get_xygrid
-export get_uvgrid
 
 """
-    get_bconv
+    $(FUNCTIONNAME)(image::AbstractIntensityImage;
+        fluxunit::Union{Unitful.Quantity,Unitful.Units,String}=Jy,
+        saunit::Union{Unitful.Quantity,Unitful.Units,String}="pixel")
 
 get a conversion factor from Jy/pixel (used in AbstractIntensityImage.data)
 to an arbitrary unit for the intensity. fluxunit is for the unit of
@@ -64,24 +64,4 @@ function get_bconv(
     end
 
     return fluxconv / saconv
-end
-
-"""
-    get_xygrid
-
-Returning 1-dimensional StepRange objects for the grids along with x and y axis in the given angular unit specified by angunit.
-"""
-function get_xygrid(
-    image::AbstractIntensityImage,
-    angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
-    return get_xygrid(image.metadata, angunit)
-end
-
-"""
-    get_uvgrid(image, dofftshift=true)
-
-returning u and v grids corresponding to the image field of view and pixel size.
-"""
-function get_uvgrid(image::AbstractIntensityImage, dofftshift::Bool=true)
-    return get_uvgrid(image.metadata, dofftshift)
 end

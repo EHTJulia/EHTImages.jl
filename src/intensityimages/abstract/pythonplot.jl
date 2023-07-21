@@ -2,6 +2,30 @@ export get_imextent
 export plot_colorbar
 export plot_xylabel
 
+"""
+    $(FUNCTIONNAME)(::AbstractIntensityImage; kwargs..., imshowkwargs...)
+
+Plot an image using PythonPlot. `imshowkwargs` are passed to PythonPlot.imshow.
+Returns a dictionary that contains all python objects generated in the plot.
+
+# Keyword Arguments
+- `angunit`: angular unit for the axes. If nothing, the unit in the image
+    metadata is used. If a Unitful unit, it can be any angular unit.
+- `fluxunit`:
+- `saunit`: unit for the solid angle.
+- `idx`: index of the image to plot. (polarization, frequency, time)
+- `cmap`: colormap to use.
+- `scale`: scaling of the image. Can be :log, :gamma or :linear.
+- `gamma`: gamma value for the :gamma scaling.
+- `dyrange`: dynamic range for the :log scaling.
+- `vmax`: maximum value for the :linear and :gamma scaling.
+- `vmin`: minimum value for the :linear and :gamma scaling.
+- `relative`: if true, the vmin and vmax are relative to the maximum value.
+- `axisoff`: if true, turn off the axis.
+- `axislabel`: if true, plot the axis labels.
+- `add_colorbar`: if true, add a colorbar.
+- `interpolation`: interpolation method for the image.
+"""
 function PythonPlot.imshow(
     image::AbstractIntensityImage;
     angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
@@ -60,19 +84,21 @@ function PythonPlot.imshow(
     end
 
     if scale == :log
+        matplotlib = pyimport("matplotlib")
         nmin = nmax / dyrange
-        norm = matplotlib[:colors][:LogNorm](vmin=nmin, vmax=nmax)
+        norm = matplotlib.colors.LogNorm(vmin=nmin, vmax=nmax)
         imarr[imarr.<nmax/dyrange] .= nmin
         nmin = nothing
         nmax = nothing
     elseif scale == :gamma
+        matplotlib = pyimport("matplotlib")
         if vmin isa Nothing
             nmin = 0
         elseif relative == true
             nmin = vmin * nmax
         end
         imarr[imarr.<0] .= 0
-        norm = matplotlib[:colors][:PowerNorm](vmin=nmin, vmax=nmax, gamma=gamma)
+        norm = matplotlib.colors.PowerNorm(vmin=nmin, vmax=nmax, gamma=gamma)
         nmin = nothing
         nmax = nothing
     elseif scale == :linear
