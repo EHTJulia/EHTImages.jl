@@ -1,7 +1,7 @@
 name = "EHTImages"
 uuid = "a1be09f2-4a9d-4f8b-a1e3-812015e25e30"
 authors = ["Kazunori Akiyama"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
