@@ -3,11 +3,11 @@ export copy_metadata!
 
 
 """
-    ehtimage_metadata_default::NamedTuple
+    intensityimage_metadata_default::NamedTuple
 
 A tuple for the default metadata keys and values for `AbstractIntensityImage`.
 """
-const ehtimage_metadata_default = (
+const intensityimage_metadata_default = (
     format="EHTJulia Intensity Image NetCDF4 Format",
     version=v"0.1.0",
     source="Nameless Source",
@@ -38,11 +38,11 @@ int(x) = round(Int64, x)
 
 
 """
-    ehtimage_metadata_default::NamedTuple
+    intensityimage_metadata_default::NamedTuple
 
-A tuple of types for metadata keys in `ehtimage_metadata_default`.
+A tuple of types for metadata keys in `intensityimage_metadata_default`.
 """
-const ehtimage_metadata_type = (
+const intensityimage_metadata_type = (
     format=string,
     version=VersionNumber,
     source=string,
@@ -72,11 +72,11 @@ const ehtimage_metadata_type = (
 
 
 """
-    ehtimage_metadata_compat::NamedTuple
+    intensityimage_metadata_compat::NamedTuple
 
-A tuple of available values for some of keys in `ehtimage_metadata_default`.
+A tuple of available values for some of keys in `intensityimage_metadata_default`.
 """
-const ehtimage_metadata_compat = (
+const intensityimage_metadata_compat = (
     coordsys=["icrs"],
     equinox=[-1],
     xunit=["rad"],
@@ -95,27 +95,17 @@ const ehtimage_metadata_compat = (
 
 Return the default metadata of the given dataset.
 """
-function default_metadata(::Type{<:AbstractIntensityImage})
+@inline function default_metadata(::Type{<:AbstractIntensityImage})
     dict = OrderedDict{Symbol,Any}()
 
-    for key in keys(ehtimage_metadata_default)
-        dict[key] = ehtimage_metadata_default[key]
+    for key in keys(intensityimage_metadata_default)
+        dict[key] = intensityimage_metadata_default[key]
     end
 
     return dict
 end
 
-
-"""
-    get_xygrid --> Tuple{StepRangeLen, StepRangeLen}
-
-Returning 1-dimensional StepRangeLen objects for the grids along with x and y axis in the given angular unit specified by angunit.
-
-# Arguments
-- `metadata::Dict{Symbol, Any}-like`: Input dictionary.
-- `angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad`: Angular units of the output pixel grids.
-"""
-function get_xygrid(
+@inline function get_xygrid(
     metadata,
     angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
     # Get scaling for the flux unit
@@ -146,13 +136,7 @@ function get_xygrid(
     return (xg, yg)
 end
 
-
-"""
-    get_uvgrid(metadata, dofftshift=true)
-
-returning u and v grids corresponding to the image field of view and pixel size.
-"""
-function get_uvgrid(metadata, dofftshift::Bool=true)
+@inline function get_uvgrid(metadata, dofftshift::Bool=true)
     # nx, ny
     nx = metadata[:nx]
     ny = metadata[:ny]
@@ -178,7 +162,7 @@ end
 
 copy metadata from the given uvdataset.
 """
-function copy_metadata!(image::AbstractIntensityImage, uvdataset::EHTUVData.AbstractUVDataSet)
+@inline function copy_metadata!(image::AbstractIntensityImage, uvdataset::EHTUVData.AbstractUVDataSet)
     for key in [:source, :instrument, :observer, :coordsys, :equinox]
         image.metadata[key] = uvdataset.metadata[key]
     end
