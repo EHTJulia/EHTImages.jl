@@ -108,6 +108,7 @@ end
 @inline function get_xygrid(
     metadata,
     angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
+
     # Get scaling for the flux unit
     if angunit == rad
         aunitconv = 1
@@ -154,6 +155,34 @@ end
     end
 
     return (ug, vg)
+end
+
+
+@inline function get_fov(
+    metadata,
+    angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
+
+    # Get scaling for the flux unit
+    if angunit == rad
+        aunitconv = 1
+    else
+        # get unit
+        if angunit isa String
+            aunit = get_unit(angunit)
+        else
+            aunit = angunit
+        end
+
+        # get scaling factor
+        aunitconv = unitconv(rad, aunit)
+    end
+
+    nx = metadata[:nx]
+    ny = metadata[:ny]
+    dx = metadata[:dx] * aunitconv
+    dy = metadata[:dy] * aunitconv
+
+    return (nx * dx, ny * dy)
 end
 
 

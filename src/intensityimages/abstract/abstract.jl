@@ -1,6 +1,7 @@
 export AbstractIntensityImage
 export get_xygrid
 export get_uvgrid
+export get_fov
 
 """
     $(TYPEDEF)
@@ -46,4 +47,22 @@ returning u and v grids corresponding to the image field of view and pixel size.
 """
 function get_uvgrid(image::AbstractIntensityImage, dofftshift::Bool=true)
     return get_uvgrid(image.metadata, dofftshift)
+end
+
+
+"""
+    get_fov(::AbstractIntensityImage, angunit) --> Tuple
+    get_fov(metadata, angunit) --> Tuple
+
+Returning the field of the view for the grids along with x and y axis
+in the given angular unit specified by angunit. The input could be a intensity image data set or
+its metadata.
+
+# Arguments
+- `angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad`: Angular units of the output pixel grids.
+"""
+function get_fov(
+    image::AbstractIntensityImage,
+    angunit::Union{Unitful.Quantity,Unitful.Units,String}=rad)
+    return get_fov(image.metadata, angunit)
 end
