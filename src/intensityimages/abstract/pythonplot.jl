@@ -26,7 +26,7 @@ Returns a dictionary that contains all python objects generated in the plot.
 - `add_colorbar`: if true, add a colorbar.
 - `interpolation`: interpolation method for the image.
 """
-function PythonPlot.imshow(
+function imshow(
     image::AbstractIntensityImage;
     angunit::Union{String,Unitful.Units,Unitful.Quantity}=rad,
     fluxunit::Union{String,Unitful.Units,Unitful.Quantity}=K,
