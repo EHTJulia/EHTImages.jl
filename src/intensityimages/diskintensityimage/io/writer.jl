@@ -160,7 +160,7 @@ Save image data to NetCDF4 format.
     NetCDF4 file where image data will be saved.
 - `mode::Symbol=:create`:
     The access mode to NCDataset.
-    Available modes are `:read`, `:append`, `:create`.
+    Available modes are `:append` and `:create`.
     See help for `EHTNCDBase.ncdmodes` for details.
 - `group::AbstractString=EHTImage.ncd_intensity_defaultgroup`:
     The group of the image data in the input NetCDF4 file.
