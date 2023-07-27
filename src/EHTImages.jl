@@ -19,7 +19,7 @@ using NCDatasets # to hande netcdf files
 using OrderedCollections # to use OrderedDictionary
 using Parameters # for more flexible definitions of struct
 using PythonCall: pyimport # to use python
-import PythonPlot: imshow # to use matplotlib
+import PythonPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
 using VLBISkyModels
 import VLBISkyModels: imagepixels, intensitymap, stokesintensitymap
