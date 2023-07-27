@@ -47,10 +47,8 @@ create Comrade.StokesIntensityMap model.
     qmap = IntensityMap(im[:, :, 2, fidx, tidx], grid)
     umap = IntensityMap(im[:, :, 3, fidx, tidx], grid)
     vmap = IntensityMap(im[:, :, 4, fidx, tidx], grid)
-    return StokesIntensityMap(imap, qmap, umap, vmap)
+    return VLBISkyModels.StokesIntensityMap(imap, qmap, umap, vmap)
 end
-
-@inline f
 
 # load intensity map into the existing AbstractIntensityImage
 @inline function Base.map!(im::AbstractIntensityImage, imap::VLBISkyModels.IntensityMap, pidx=1, fidx=1, tidx=1)
@@ -71,6 +69,7 @@ end
     return nothing
 end
 
+# load an abstract model into the existing AbstractIntensityImage
 @inline function Base.map!(im::AbstractIntensityImage, model::ComradeBase.AbstractModel, pidx=1, fidx=1, tidx=1)
     imap = intensitymap(im, pidx, fidx, tidx)
     intensitymap!(imap, model)
