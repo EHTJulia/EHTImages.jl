@@ -169,7 +169,7 @@ function intensityimage(
     )
     dimstack = DimStack(
         (intensity, polarization, frequency, time),
-        metadata=metadata
+        metadata=attrib
     )
 
     # create a IntensityImage instance.
