@@ -8,7 +8,12 @@ using DocStringExtensions # for docstrings
 using EHTDimensionalData
 using EHTNCDBase
 using EHTUVData
-using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
+using EHTUtils:
+    c, kB, σ2fwhm,
+    unitconv, get_unit,
+    Jy, K, rad, deg,
+    @throwerror,
+    mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
 using FFTW: fftfreq, fftshift, plan_fft, plan_ifft # for FFT
 using FITSIO
 using FLoops
@@ -20,9 +25,10 @@ using OrderedCollections # to use OrderedDictionary
 using Parameters # for more flexible definitions of struct
 using PythonCall: pyimport # to use python
 import PythonPlot # to use matplotlib
+import PythonPlot: imshow
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
 using VLBISkyModels
-import VLBISkyModels: imagepixels, intensitymap, stokesintensitymap
+import VLBISkyModels: imagepixels, intensitymap
 
 # Include
 #   DataStorageTypes
