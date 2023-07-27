@@ -14,7 +14,7 @@ Create the grid instance for Comrade.
     iyref = metadata[:iyref]
     x0 = -dx * (ixref - (nx + 1) / 2)
     y0 = dy * (iyref - (ny + 1) / 2)
-    return imagepixels(fovx, fovy, nx, ny, x0, y0)
+    return VLBISkyModels.imagepixels(fovx, fovy, nx, ny, x0, y0)
 end
 
 @inline imagepixels(im::AbstractIntensityImage) = imagepixels(im.metadata)
@@ -29,7 +29,7 @@ create Comrade.IntensityMap model.
 """
 @inline function intensitymap(im::AbstractIntensityImage, pidx=1, fidx=1, tidx=1)
     grid = imagepixels(im)
-    return IntensityMap(im[:, :, pidx, fidx, tidx], imagepixels(im))
+    return IntensityMap(im[:, :, pidx, fidx, tidx], grid)
 end
 
 """
@@ -48,4 +48,46 @@ create Comrade.StokesIntensityMap model.
     umap = IntensityMap(im[:, :, 3, fidx, tidx], grid)
     vmap = IntensityMap(im[:, :, 4, fidx, tidx], grid)
     return StokesIntensityMap(imap, qmap, umap, vmap)
+end
+
+@inline f
+
+# load intensity map into the existing AbstractIntensityImage
+@inline function Base.map!(im::AbstractIntensityImage, imap::VLBISkyModels.IntensityMap, pidx=1, fidx=1, tidx=1)
+    @assert sizeof(imap) == (metadata.nx, metadata.ny)
+    im.data[:, :, pidx, fidx, tidx] .= imap.data.data[end:-1:1, 1:end]
+    return nothing
+end
+
+@inline function add!(im::AbstractIntensityImage, imap::VLBISkyModels.IntensityMap, pidx=1, fidx=1, tidx=1)
+    @assert sizeof(imap) == (metadata.nx, metadata.ny)
+    im.data[:, :, pidx, fidx, tidx] .+= imap.data.data[end:-1:1, 1:end]
+    return nothing
+end
+
+@inline function mul!(im::AbstractIntensityImage, imap::VLBISkyModels.IntensityMap, pidx=1, fidx=1, tidx=1)
+    @assert sizeof(imap) == (metadata.nx, metadata.ny)
+    im.data[:, :, pidx, fidx, tidx] .*= imap.data.data[end:-1:1, 1:end]
+    return nothing
+end
+
+@inline function Base.map!(im::AbstractIntensityImage, model::ComradeBase.AbstractModel, pidx=1, fidx=1, tidx=1)
+    imap = intensitymap(im, pidx, fidx, tidx)
+    intensitymap!(imap, model)
+    im.data[:, :, pidx, fidx, tidx] = imap.data.data[end:-1:1, 1:end]
+    return nothing
+end
+
+@inline function add!(im::AbstractIntensityImage, model::ComradeBase.AbstractModel, pidx=1, fidx=1, tidx=1)
+    imap = intensitymap(im, pidx, fidx, tidx)
+    intensitymap!(imap, model)
+    im.data[:, :, pidx, fidx, tidx] .+= imap.data.data[end:-1:1, 1:end]
+    return nothing
+end
+
+@inline function mul!(im::AbstractIntensityImage, model::ComradeBase.AbstractModel, pidx=1, fidx=1, tidx=1)
+    imap = intensitymap(im, pidx, fidx, tidx)
+    intensitymap!(imap, model)
+    im.data[:, :, pidx, fidx, tidx] .*= imap.data.data[end:-1:1, 1:end]
+    return nothing
 end

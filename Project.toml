@@ -4,6 +4,7 @@ authors = ["Kazunori Akiyama"]
 version = "0.2.2"
 
 [deps]
+ComradeBase = "6d8c423b-a35f-4ef1-850c-862fe21f82c4"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 EHTDimensionalData = "1ac9d6a4-0fea-4ca3-8a21-bd292c035e25"
