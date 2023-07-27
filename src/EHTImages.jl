@@ -5,7 +5,6 @@ using Base
 using Dates
 using DocStringExtensions # for docstrings
 using EHTDimensionalData
-using EHTModels
 using EHTNCDBase
 using EHTUVData
 using EHTUtils: c, kB, unitconv, get_unit, Jy, K, rad, deg, σ2fwhm, @throwerror, mjd2datetime, datetime2mjd, jd2mjd, mjd2jd
@@ -21,6 +20,8 @@ using Parameters # for more flexible definitions of struct
 using PythonCall: pyimport # to use python
 import PythonPlot # to use matplotlib
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
+using VLBISkyModels
+import VLBISkyModels: imagepixels
 
 # Include
 #   DataStorageTypes
@@ -32,19 +33,20 @@ include("imagedatasets/abstract.jl")
 #   Intensity images
 #       Abstract Type
 include("intensityimages/abstract/abstract.jl")
-include("intensityimages/abstract/convolution.jl")
 include("intensityimages/abstract/metadata.jl")
-include("intensityimages/abstract/modelmap.jl")
+#include("intensityimages/abstract/convolution.jl")
+#include("intensityimages/abstract/modelmap.jl")
 include("intensityimages/abstract/plotting_tools.jl")
 include("intensityimages/abstract/pythonplot.jl")
 include("intensityimages/abstract/io/fitswriter.jl")
+include("intensityimages/abstract/io/vlbiskymodels.jl")
 
 #       DiskIntensityImage
 include("intensityimages/diskintensityimage/diskintensityimage.jl")
 include("intensityimages/diskintensityimage/io/const.jl")
 include("intensityimages/diskintensityimage/io/reader.jl")
 include("intensityimages/diskintensityimage/io/writer.jl")
-include("intensityimages/diskintensityimage/convolution.jl")
+#include("intensityimages/diskintensityimage/convolution.jl")
 
 #       IntensityImage
 include("intensityimages/intensityimage/intensityimage.jl")
