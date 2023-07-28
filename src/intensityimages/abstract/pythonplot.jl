@@ -1,6 +1,7 @@
 export get_imextent
 export plot_colorbar
 export plot_xylabel
+export imshow
 
 """
     $(FUNCTIONNAME)(::AbstractIntensityImage; kwargs..., imshowkwargs...)
