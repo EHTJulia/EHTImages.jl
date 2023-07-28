@@ -3,6 +3,8 @@ module EHTImages
 # Import external packages
 using Base
 using ComradeBase
+import ComradeBase:
+    imagepixels, intensitymap
 using Dates
 using DocStringExtensions # for docstrings
 using EHTDimensionalData
@@ -28,7 +30,6 @@ import PythonPlot # to use matplotlib
 import PythonPlot: imshow
 using Unitful, UnitfulAngles, UnitfulAstro # for Units
 using VLBISkyModels
-import VLBISkyModels: imagepixels, intensitymap
 
 # Include
 #   DataStorageTypes
