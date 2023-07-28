@@ -28,6 +28,7 @@ UnitfulAstro = "6112ee07-acf9-5e0f-b108-d242c714bf9f"
 VLBISkyModels = "d6343c73-7174-4e0f-bb64-562643efbeca"
 
 [compat]
+ComradeBase = "0.5"
 DocStringExtensions = "0.9"
 EHTDimensionalData = "0.1"
 EHTNCDBase = "0.1"
