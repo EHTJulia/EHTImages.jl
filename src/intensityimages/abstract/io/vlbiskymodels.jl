@@ -184,5 +184,5 @@ end
 end
 
 # defaults
-const intensitymap(im::AbstractIntensityImage, args...) = intensitymap2d(im, args...)
-const stokesintensitymap(im::AbstractIntensityImage, args...) = stokesintensitymap2d(im, args...)
+intensitymap(im::AbstractIntensityImage, args...) = intensitymap2d(im, args...)
+stokesintensitymap(im::AbstractIntensityImage, args...) = stokesintensitymap2d(im, args...)

@@ -1,3 +1,5 @@
+export load
+
 function load(imap::VLBISkyModels.IntensityMap; p=:single, pidx=1, fidx=1, tidx=1)
     # get the number of dimensions
     ndim = ndims(imap)
