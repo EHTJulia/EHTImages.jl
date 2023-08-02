@@ -60,5 +60,6 @@ include("intensityimages/diskintensityimage/io/writer.jl")
 include("intensityimages/intensityimage/intensityimage.jl")
 include("intensityimages/intensityimage/io/reader.jl")
 include("intensityimages/intensityimage/io/fitsreader.jl")
+include("intensityimages/intensityimage/io/vlbiskymodels.jl")
 
 end
